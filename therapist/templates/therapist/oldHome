@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Therapist Practice</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: #f8f9fa;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+            background: #f8f9fa;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #56854E;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #7AA087;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative; /* Make this the reference for ::before */
+            background: url('{% static "images/hero-bg.jpg" %}') no-repeat center center/cover;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+            overflow: hidden; /* Ensures no extra content spills out */
+        }
+        
+        /* Dark overlay to make text more readable */
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 100%);
+            z-index: 1; /* Make sure it sits above the background */
+        }
+        
+        /* Ensure content is above overlay */
+        .hero * {
+            position: relative;
+            z-index: 2;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            background: #56854E;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #7AA087;
+        }
+
+        /* Features Section */
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        /* Floating Contact Button */
+        .contact-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #56854E;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: background 0.3s;
+            border: none;
+            z-index: 2000;
+        }
+
+        .contact-btn:hover {
+            background: #7AA087;
+        }
+
+        /* Contact Modal */
+        .contact-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 350px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-content h2 {
+            margin-bottom: 1rem;
+        }
+
+        .modal-content input, .modal-content textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .modal-content button[type="submit]{
+            background: #56854E;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .modal-content button:hover {
+            background: #7AA087;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        footer {
+            background: #56854E;
+            color: white;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div><img src="{% static 'images/logo.png' %}" alt="Logo" height="40"></div>
+        <ul>
+            <li><a href="/Blog/">Tip & Thoughts</a></li>
+            <li><a href="/Assesment/">Online Assessment</a></li>
+            <li><a href="/Experiences/">Shared Experiences</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/about/">My Story 💕</a></li>
+            <li><a href="/dashboard/">Personalized Dashboard</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Calm Your Mind. Change Your Life.</h1>
+        <p>Experience expert therapy and compassionate care for your emotional well-being.</p>
+        <a href="/Registration/" class="btn-primary">Get Started</a>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="feature-card">
+            <h3>Personalized Care</h3>
+            <p>We tailor our therapy plans to your specific needs.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Compassionate Support</h3>
+            <p>A safe and welcoming space for self-expression.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Online Appointments</h3>
+            <p>Convenient virtual therapy from anywhere.</p>
+        </div>
+    </section>
+
+    <button class="contact-btn" onclick="openContactModal()">📞 Contact Me</button>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="contact-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeContactModal()">&times;</span>
+            <h2>Contact</h2>
+            <p>Fill in your details and we'll get back to you shortly.</p>
+            <form>
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Your Message" required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 Dvora Leah's Practice - All Rights Reserved</p>
+    </footer>
+
+    <script>
+        function openContactModal() {
+            document.getElementById("contactModal").style.display = "flex";
+        }
+
+        function closeContactModal() {
+            document.getElementById("contactModal").style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            let modal = document.getElementById("contactModal");
+            if (event.target === modal) {
+                closeContactModal();
+            }
+        };
+    </script>
+
+</body>
+</html>

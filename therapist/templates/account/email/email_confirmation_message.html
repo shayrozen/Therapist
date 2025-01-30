@@ -1,0 +1,4 @@
+<p>Hello {{ user.get_full_name|default:user.email }},</p>
+<p>Thank you for signing up! Please confirm your email address by clicking the link below:</p>
+<p><a href="{{ activate_url }}">Confirm Email</a></p>
+<p>Thank you,<br>My Therapy Site Team</p>

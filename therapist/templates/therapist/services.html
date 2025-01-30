@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Therapy Services</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <h1>Our Therapy Services</h1>
+    </header>
+    <section class="services-hero">
+        <img src="{% static 'images/services-hero.jpg' %}" alt="Therapy Services" class="hero-image">
+        <h2>Supporting Your Mental Health Journey</h2>
+        <p>Explore our range of therapy services designed to meet your needs.</p>
+    </section>
+    <section class="services-list">
+        <div class="service-card">
+            <h2>Individual Therapy</h2>
+            <p>One-on-one sessions to address anxiety, depression, stress, or personal growth.</p>
+        </div>
+        <div class="service-card">
+            <h2>Couples Therapy</h2>
+            <p>Strengthen your relationship through open communication and mutual understanding.</p>
+        </div>
+        <div class="service-card">
+            <h2>Family Counseling</h2>
+            <p>Resolve conflicts and build stronger family connections in a supportive environment.</p>
+        </div>
+        <div class="service-card">
+            <h2>Workshops</h2>
+            <p>Group sessions focusing on mindfulness, stress management, and more.</p>
+        </div>
+    </section>
+    <footer>
+        <p>© 2025 Dvora Leah's Practice</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Therapist Practice</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            padding: 2rem;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .login-header h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #004aad;
+        }
+
+        .login-header p {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .login-form label {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-form input {
+            font-size: 1rem;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .login-form button {
+            background-color: #004aad;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-form button:hover {
+            background-color: #00337a;
+        }
+
+        .extra-links {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .extra-links a {
+            text-decoration: none;
+            font-size: 0.9rem;
+            color: #004aad;
+            transition: color 0.3s ease;
+        }
+
+        .extra-links a:hover {
+            color: #00337a;
+        }
+
+        .brand-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .brand-logo img {
+            max-width: 100px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="brand-logo">
+            <img src="{% static 'images/logo.png' %}" alt="Brand Logo">
+        </div>
+        <div class="login-header">
+            <h1>Login</h1>
+            <p>Welcome back! Please log in to your account.</p>
+        </div>
+        <form method="post" action="{% url 'account_login' %}" class="login-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Sign In</button>
+        </form>
+        <div class="extra-links">
+            <p>Don't have an account? <a href="{% url 'account_signup' %}">Sign Up</a></p>
+            <p><a href="{% url 'account_reset_password' %}">Forgot Password?</a></p>
+        </div>
+    </div>
+</body>
+</html>

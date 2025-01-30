@@ -1,0 +1,162 @@
+
+## **Roadmap**
+
+### **1. Client Portal**
+#### Features:
+- Login system for clients.
+- Dashboard view for clients, with progress tracking, homework, meeting transcripts, bookings, and personal diary entries.
+- Create admin-only pages for managing availability and viewing clients’ progress
+- Charts for therapy progress and journey.
+
+#### Steps:
+1. **Set Up Authentication**:
+V   - Use `django-allauth` for user authentication.  
+V   - Customize user models to include client-specific details.
+V   - Create separate roles for admin and client.
+
+2. **Build the Client Dashboard**:
+   - Create a `dashboard` app for the client portal.
+   - Design a dashboard view to display:
+     - **Progress Tracking**:
+       - Store progress metrics in a model.
+       - Use Chart.js or Plotly to render visualizations.
+     - **Homework and Transcripts**:
+       - Add models for homework and meeting transcripts.
+       - Display these items dynamically.
+     - **Personal Diary**:
+       - Allow clients to add, edit, and view diary entries.
+
+3. **Bookings Integration**:
+   - Integrate with the booking system (from Feature 3) to show upcoming and past appointments.
+   - Add rescheduling options (optional).
+
+---
+
+### **2. Blog, Tips, and Resource Center**
+#### Features:
+- Admin-managed blog for articles and mental health tips.
+- Categories and tags for content organization.
+- Search and filter functionality.
+
+#### Steps:
+1. **Create a Blog App**:
+   - Add models for articles (`title`, `content`, `category`, `tags`, `publish_date`).
+   - Use `django-taggit` for tagging functionality.
+   - Set up a WYSIWYG editor like `django-tinymce` for admin content creation.
+
+2. **Build the Blog Page**:
+   - Create views for:
+     - Blog listing (paginated).
+     - Single article details.
+   - Add search and filter options.
+
+3. **Design Frontend**:
+   - Use a grid layout for blog posts.
+   - Include a sidebar for categories and recent posts.
+
+---
+
+### **3. Appointment Booking with Calendar Integration**
+#### Features:
+- Clients can book, view, or cancel appointments.
+- Admin manages availability.
+- Google Calendar integration for syncing.
+
+#### Steps:
+1. **Booking System**:
+   - Create a `Booking` model with fields like `client`, `date`, `time`, `status`.
+   - Build views for booking creation, cancellation, and listing.
+   - Use a calendar library like `fullcalendar.js` for a visual booking interface.
+
+2. **Admin Panel for Availability**:
+   - Allow admins to set available time slots.
+   - Block unavailable dates automatically.
+
+3. **Google Calendar Integration**:
+   - Use the Google Calendar API for syncing:
+     - Authorize with OAuth2.
+     - Push and pull appointment data to/from Google Calendar.
+
+---
+
+### **4. Contact Dynamic Form**
+#### Features:
+- Form to collect client inquiries.
+- Auto-reply email upon submission.
+- Store inquiries in the database.
+
+#### Steps:
+1. **Dynamic Form Creation**:
+   - Create a `Contact` model with fields for `name`, `email`, `message`, `submitted_at`.
+   - Build a contact form using Django Forms.
+   - Use `django-crispy-forms` for styling.
+
+2. **Email Integration**:
+   - Use Django's email backend to send auto-reply emails.
+
+3. **Database Storage**:
+   - Save inquiries in the database for admin review.
+
+---
+
+### **5. Reviews Carousel**
+#### Features:
+- Display client reviews in a rotating carousel.
+- Allow clients to submit reviews for approval.
+
+#### Steps:
+1. **Model and Submission**:
+   - Create a `Review` model with fields like `client`, `review_text`, `rating`, `is_approved`.
+   - Build a form for clients to submit reviews.
+
+2. **Admin Approval System**:
+   - Add a moderation workflow to approve or reject reviews.
+
+3. **Frontend Carousel**:
+   - Use a library like `slick.js` or Bootstrap’s carousel for review rotation.
+
+---
+
+### **6. Mental Health Assessments**
+#### Features:
+- Admin-only functionality to fill out assessments for clients.
+- Store results in the database.
+
+#### Steps:
+1. **Assessment Model**:
+   - Create models for assessments (e.g., `Client`, `AssessmentType`, `Score`, `Notes`).
+
+2. **Admin Interface**:
+   - Build forms for admins to fill out and save assessments.
+   - Create a view to list all assessments for a client.
+
+3. **Privacy**:
+   - Ensure assessments are not visible to clients.
+
+---
+
+## **Timeline**
+
+### **Phase 1: Core Setup (Weeks 1–2)**
+- Set up the Django project structure and environment.
+- Install `django-allauth` and configure authentication.
+- Create base templates (header, footer, navbar).
+
+### **Phase 2: Client Portal (Weeks 3–5)**
+- Build the client dashboard with progress tracking, homework, and diary.
+- Integrate Chart.js for visualizing progress.
+- Connect the portal with the booking system.
+
+### **Phase 3: Blog and Resource Center (Weeks 6–7)**
+- Develop the blog app and admin tools for content creation.
+- Add search and filter functionality.
+
+### **Phase 4: Booking System (Weeks 8–9)**
+- Implement client-side booking.
+- Add admin availability controls.
+- Integrate with Google Calendar.
+
+### **Phase 5: Additional Features (Weeks 10–12)**
+- Develop the contact form with email and database storage.
+- Build the reviews carousel.
+- Implement mental health assessments for admin use.

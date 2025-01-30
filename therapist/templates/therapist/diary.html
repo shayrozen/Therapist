@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Diary</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        header {
+            background-color: #004aad;
+            color: white;
+            text-align: center;
+            padding: 1.5rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+        }
+
+        header .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-links a {
+            color: white;
+            font-size: 1rem;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.6rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .actions input[type="text"] {
+            width: 100%;
+            max-width: 300px;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .actions button {
+            background-color: #004aad;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .actions button:hover {
+            background-color: #00337a;
+        }
+
+        .entries {
+            margin-top: 1rem;
+        }
+
+        .entry {
+            border-bottom: 1px solid #ddd;
+            padding: 1rem 0;
+        }
+
+        .entry h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .entry p {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .entry time {
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        .no-entries {
+            text-align: center;
+            color: #777;
+            font-size: 1.2rem;
+            margin-top: 2rem;
+        }
+
+        .back-button {
+            display: inline-block;
+            background-color: #777;
+            color: white;
+            font-size: 1rem;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #555;
+        }
+
+        /* Modal Styling */
+        #addEntryModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-content h2 {
+            margin-bottom: 1rem;
+        }
+
+        .modal-content input,
+        .modal-content textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .modal-content button {
+            background-color: #004aad;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .modal-content button:hover {
+            background-color: #00337a;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            color: #777;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>My Diary</h1>
+        <div class="nav-links">
+            <a href="/">🏠 Home</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <a href="/dashboard/" class="back-button">← Back to Dashboard</a>
+        
+        <!-- Actions -->
+        <div class="actions">
+            <input type="text" id="search" placeholder="Search entries..." onkeyup="filterEntries()">
+            <button onclick="openAddEntryModal()">+ Add New Entry</button>
+        </div>
+
+        <!-- Diary Entries -->
+        <div class="entries" id="entries">
+            {% if entries %}
+                {% for entry in entries %}
+                <div class="entry">
+                    <h3>{{ entry.title }}</h3>
+                    <p>{{ entry.content }}</p>
+                    <time>{{ entry.date|date:"M d, Y H:i" }}</time>
+                </div>
+                {% endfor %}
+            {% else %}
+            <div class="no-entries">No entries found. Start by adding your first diary entry!</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Add Entry Modal -->
+    <div id="addEntryModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeAddEntryModal()">&times;</span>
+            <h2>Add New Entry</h2>
+            <form method="post" action="{% url 'add_diary_entry' %}">
+                {% csrf_token %}
+                <input type="text" name="title" placeholder="Entry Title" required>
+                <textarea name="content" placeholder="Your thoughts..." required></textarea>
+                <button type="submit">Save</button>
+                <button type="button" onclick="closeAddEntryModal()">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Dvora Leah's Practice</p>
+    </footer>
+
+    <script>
+        function openAddEntryModal() {
+            document.getElementById('addEntryModal').style.display = 'flex';
+        }
+
+        function closeAddEntryModal() {
+            document.getElementById('addEntryModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            let modal = document.getElementById("addEntryModal");
+            if (event.target == modal) {
+                closeAddEntryModal();
+            }
+        };
+    </script>
+</body>
+</html>

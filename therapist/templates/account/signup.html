@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %} 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .signup-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+        }
+        .signup-container h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        form input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        form button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        form button:hover {
+            background-color: #45a049;
+        }
+        .signup-container p {
+            text-align: center;
+        }
+        .signup-container a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        .signup-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <img src="{% static 'images/logo.png' %}" alt="Logo" style="display:block; margin: 0 auto 20px; max-width: 100px;">
+        <h1>Join Us</h1>
+        <p style="text-align:center; color: #555;">Join our community and start your journey!</p>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Sign Up</button>
+        </form>
+        <p>Already have an account? <a href="/accounts/login/">Log in</a></p>
+    </div>    
+</body>
+</html>
