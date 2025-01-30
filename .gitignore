@@ -1,0 +1,23 @@
+# Ignore Python compiled files
+*.pyc
+__pycache__/
+
+# Ignore virtual environment
+venv/
+env/
+
+# Ignore database files
+db.sqlite3
+
+# Ignore static and media files (optional, if using local storage)
+staticfiles/
+media/
+
+# Ignore Django secret settings (optional, if using a .env file)
+.env
+*.log
+
+# Ignore VS Code and IDE settings (optional)
+.vscode/
+.idea/
+*.swp
