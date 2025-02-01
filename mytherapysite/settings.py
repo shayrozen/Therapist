@@ -83,13 +83,26 @@ WSGI_APPLICATION = "mytherapysite.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+
+import pymysql
+pymysql.install_as_MySQLdb()
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'shayrozen$default',
+        'USER': 'shayrozen',
+        'PASSWORD': 'Sh123123',
+        'HOST': 'shayrozen.mysql.pythonanywhere-services.com',
+        'PORT': '3306',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -121,6 +134,7 @@ USE_I18N = True
 
 USE_TZ = True
 
+STATIC_ROOT = "/home/shayrozen/mytherapysite/static"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
