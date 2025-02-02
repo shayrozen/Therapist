@@ -12,4 +12,6 @@ urlpatterns = [
     path('dashboard/diary/', views.diary, name='diary'),
     path('userlist/', user_list, name='user_list'),
     path('dashboard/diary/add/', views.add_diary_entry, name='add_diary_entry'),
+    path('Experiences/', views.Experiences, name='Experiences'),
+
 ]

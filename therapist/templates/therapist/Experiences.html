@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shared Experiences</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <!-- Slick Carousel CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            text-align: center;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: #f8f9fa;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Mobile Menu */
+        .menu-toggle {
+            display: none;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #56854E;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #7AA087;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            background: url('{% static "images/hero-bg.jpg" %}') no-repeat center center/cover;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+            overflow: hidden;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 100%);
+            z-index: 1;
+        }
+
+        .hero * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 90%;
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            background: #56854E;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #7AA087;
+        }
+
+        /* Features Section */
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            padding: 2rem 1rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 350px;
+        }
+
+        /* Floating Contact Button */
+        .contact-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #56854E;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: background 0.3s;
+            border: none;
+            z-index: 2000;
+        }
+
+        .contact-btn:hover {
+            background: #7AA087;
+        }
+
+        /* Contact Modal */
+        .contact-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-content input, .modal-content textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .modal-content button {
+            background: #56854E;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .modal-content button:hover {
+            background: #7AA087;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                flex-direction: column;
+                background: white;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                padding: 1rem 0;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            .hero {
+                height: 60vh;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div><img src="{% static 'images/logo.png' %}" alt="Logo" height="40"></div>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <ul>
+            <li><a href="/Blog/">Tip & Thoughts</a></li>
+            <li><a href="/Assessment/">Online Assessment</a></li>
+            <li><a href="/Experiences/">Shared Experiences</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/about/">My Story 💕</a></li>
+            <li><a href="/dashboard/">Personalized Dashboard</a></li>
+        </ul>
+    </nav>
+
+
+    <!-- Reviews Section -->
+    <section class="reviews-section">
+        <h2>Words from the Heart 💬</h2>
+        <div class="review-carousel">
+            <div class="review-card">
+                <h3>Sarah L.</h3>
+                <p>"Dvora Leah's guidance has been transformative. I feel more balanced and confident in my daily life."</p>
+                <p>⭐⭐⭐⭐⭐</p>
+            </div>
+            <div class="review-card">
+                <h3>Michael B.</h3>
+                <p>"I finally found someone who truly listens. The support I've received here has been invaluable."</p>
+                <p>⭐⭐⭐⭐⭐</p>
+            </div>
+            <div class="review-card">
+                <h3>Emma W.</h3>
+                <p>"Highly professional and compassionate service. My mental health has never been better."</p>
+                <p>⭐⭐⭐⭐</p>
+            </div>
+        </div>
+    </section>
+
+
+    <button class="contact-btn" onclick="openContactModal()">📞 Contact Me</button>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="contact-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeContactModal()">&times;</span>
+            <h2>Contact</h2>
+            <p>Fill in your details and we'll get back to you shortly.</p>
+            <form>
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Your Message" required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Dvora Leah's Practice - All Rights Reserved</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector("nav ul").classList.toggle("active");
+        }
+        function openContactModal() {
+            document.getElementById("contactModal").style.display = "flex";
+        }
+
+        function closeContactModal() {
+            document.getElementById("contactModal").style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            let modal = document.getElementById("contactModal");
+            if (event.target === modal) {
+                closeContactModal();
+            }
+        };
+    </script>
+    <!-- jQuery & Slick.js -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <!-- Initialize the Carousel -->
+    <script>
+        $(document).ready(function(){
+            $('.review-carousel').slick({
+                slidesToShow: 1,
+                autoplay: true,
+                autoplaySpeed: 3000,
+                dots: true,
+                arrows: false
+            });
+        });
+    </script>
+</body>
+</html>

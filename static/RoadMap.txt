@@ -3,8 +3,8 @@
 
 ### **1. Client Portal**
 #### Features:
-- Login system for clients.
-- Dashboard view for clients, with progress tracking, homework, meeting transcripts, bookings, and personal diary entries.
+V Login system for clients.
+-V Dashboard view for clients, with progress tracking, homework, meeting transcripts, bookings, and personal diary entries.
 - Create admin-only pages for managing availability and viewing clients’ progress
 - Charts for therapy progress and journey.
 
@@ -15,52 +15,32 @@ V   - Customize user models to include client-specific details.
 V   - Create separate roles for admin and client.
 
 2. **Build the Client Dashboard**:
-   - Create a `dashboard` app for the client portal.
-   - Design a dashboard view to display:
+V Create a `dashboard` app for the client portal.
+V Design a dashboard view to display:
      - **Progress Tracking**:
        - Store progress metrics in a model.
        - Use Chart.js or Plotly to render visualizations.
      - **Homework and Transcripts**:
-       - Add models for homework and meeting transcripts.
+       - Add models for homework (not completed / completed checkbox)
+       - Meetings transcripts / Meetings Summary by therapist
+       - pinned assignments by therapist.
        - Display these items dynamically.
      - **Personal Diary**:
        - Allow clients to add, edit, and view diary entries.
 
-3. **Bookings Integration**:
-   - Integrate with the booking system (from Feature 3) to show upcoming and past appointments.
-   - Add rescheduling options (optional).
 
----
 
-### **2. Blog, Tips, and Resource Center**
-#### Features:
-- Admin-managed blog for articles and mental health tips.
-- Categories and tags for content organization.
-- Search and filter functionality.
 
-#### Steps:
-1. **Create a Blog App**:
-   - Add models for articles (`title`, `content`, `category`, `tags`, `publish_date`).
-   - Use `django-taggit` for tagging functionality.
-   - Set up a WYSIWYG editor like `django-tinymce` for admin content creation.
 
-2. **Build the Blog Page**:
-   - Create views for:
-     - Blog listing (paginated).
-     - Single article details.
-   - Add search and filter options.
 
-3. **Design Frontend**:
-   - Use a grid layout for blog posts.
-   - Include a sidebar for categories and recent posts.
-
----
-
-### **3. Appointment Booking with Calendar Integration**
-#### Features:
-- Clients can book, view, or cancel appointments.
-- Admin manages availability.
-- Google Calendar integration for syncing.
+3. Appointment Bookings Module inside the personalized dashboard:
+   - Integrate with the booking system to show upcoming and past appointments.
+   - put all appointments that booked with arrived / not arrived (Colored green and grey) across timeline.
+   - option to change / cancel appointment beforehand.
+   - Add rescheduling options.
+   - Clients can book, view, or cancel appointments.
+   -Let admin therapist insert availiablity for appointment: online / inperson.
+   - Google Calendar integration for syncing.
 
 #### Steps:
 1. **Booking System**:
@@ -77,7 +57,37 @@ V   - Create separate roles for admin and client.
      - Authorize with OAuth2.
      - Push and pull appointment data to/from Google Calendar.
 
+
+
+
+
+### **2. Blog, Tips, and Resource Center**
+#### Features:
+- Admin-managed blog for articles and mental health tips.
+- Categories and tags for content organization.
+- Search and filter functionality.
+
+1. **Create a Blog App**:
+   - Add models for articles (`title`, `content`, `category`, `tags`, `publish_date`).
+   - Use `django-taggit` for tagging functionality.
+   - Set up a WYSIWYG editor like `django-tinymce` for admin content creation.
+
+2. **Build the Blog Page**:
+   - Create views for:
+     - Blog listing (paginated).
+     - Single article details.
+   - Add search and filter options.
+
+3. **Design Frontend**:
+   - Use a grid layout for blog posts.
+   - Include a sidebar for categories and recent posts.
+
+
+
+
+
 ---
+
 
 ### **4. Contact Dynamic Form**
 #### Features:
@@ -98,6 +108,9 @@ V   - Create separate roles for admin and client.
    - Save inquiries in the database for admin review.
 
 ---
+
+
+
 
 ### **5. Reviews Carousel**
 #### Features:
@@ -160,3 +173,9 @@ V   - Create separate roles for admin and client.
 - Develop the contact form with email and database storage.
 - Build the reviews carousel.
 - Implement mental health assessments for admin use.
+
+
+
+
+*fit to night them users
+*connect to users Db

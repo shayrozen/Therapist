@@ -47,3 +47,8 @@ User = get_user_model()
 def user_list(request):
     users = User.objects.all()
     return render(request, 'user_list.html', {'users': users})
+
+
+
+def Experiences(request):
+    return render(request, 'therapist/Experiences.html')
