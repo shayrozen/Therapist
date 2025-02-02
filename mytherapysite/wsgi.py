@@ -10,7 +10,7 @@ https://docs.djangoproject.com/en/5.1/howto/deployment/wsgi/
 import os
 import sys
 
-path = "/home/shayrozen/mytherapysite"
+path = "/home/shayrozen/Therapist"
 if path not in sys.path:
     sys.path.append(path)
     
