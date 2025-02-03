@@ -17,8 +17,7 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
+            background: linear-gradient(to bottom, #f5f7fa, #B5C5C4);
             text-align: center;
         }
 
@@ -28,13 +27,18 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 2rem;
-            background: #f8f9fa;
+            background: #B5C5C4;
             position: fixed;
             width: 100%;
             top: 0;
             left: 0;
             z-index: 1000;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .logo-container {
+            display: flex;
+            justify-content: flex-start;  /* Align logo to the left on desktop */
+            align-items: center;
         }
 
         /* Mobile Menu */
@@ -48,6 +52,7 @@
             list-style: none;
             display: flex;
             gap: 1.5rem;
+            background-color:#B5C5C4;
         }
 
         nav ul li a {
@@ -235,6 +240,12 @@
                 padding: 1rem 0;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             }
+            .logo-container {
+                justify-content: center;  /* Center logo on mobile */
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+    
 
             .menu-toggle {
                 display: block;
@@ -260,7 +271,7 @@
 </head>
 <body>
     <nav>
-        <div><img src="{% static 'images/logo.png' %}" alt="Logo" height="40"></div>
+        <div class="logo-container"><a href="{% url 'home' %}"><img src="{% static 'images/logo.jpg' %}" alt="Logo" height="75"></a></div>
         <div class="menu-toggle" onclick="toggleMenu()">☰</div>
         <ul>
             <li><a href="/Blog/">Tip & Thoughts</a></li>

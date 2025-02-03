@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-gd-+-u^el54$-_kcfc48x=1lo67y$9uqj@8x+m4ry9*vm(zf_x"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['shayrozen.pythonanywhere.com', '127.0.0.1']
 
@@ -82,26 +82,31 @@ WSGI_APPLICATION = "mytherapysite.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
+
 
 import pymysql
 pymysql.install_as_MySQLdb()
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'shayrozen$default',
-        'USER': 'shayrozen',
-        'PASSWORD': 'Sh123123',
-        'HOST': 'shayrozen.mysql.pythonanywhere-services.com',
-        'PORT': '3306',
+
+if 'PYTHONANYWHERE_DOMAIN' in os.environ:
+    # Production on PythonAnywhere
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'shayrozen$default',
+            'USER': 'shayrozen',
+            'PASSWORD': 'Sh123123',
+            'HOST': 'shayrozen.mysql.pythonanywhere-services.com',
+            'PORT': '3306',
+        }
     }
-}
+else:
+    DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

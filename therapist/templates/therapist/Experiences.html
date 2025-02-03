@@ -18,10 +18,15 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
-            text-align: center;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #f5f7fa, #B5C5C4);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            flex-direction: column; /* Stack items vertically */
+            min-height: 100vh;
         }
 
         /* Navigation */
@@ -30,7 +35,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 2rem;
-            background: #f8f9fa;
+            background: #B5C5C4;
             position: fixed;
             width: 100%;
             top: 0;
@@ -38,7 +43,12 @@
             z-index: 1000;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-
+        
+        .logo-container {
+            display: flex;
+            justify-content: flex-start;  /* Align logo to the left on desktop */
+            align-items: center;
+        }
         /* Mobile Menu */
         .menu-toggle {
             display: none;
@@ -50,6 +60,7 @@
             list-style: none;
             display: flex;
             gap: 1.5rem;
+            background-color:#B5C5C4;
         }
 
         nav ul li a {
@@ -62,50 +73,6 @@
         nav ul li a:hover {
             color: #7AA087;
         }
-
-        /* Hero Section */
-        .hero {
-            position: relative;
-            background: url('{% static "images/hero-bg.jpg" %}') no-repeat center center/cover;
-            height: 80vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
-            overflow: hidden;
-            padding: 1rem;
-            text-align: center;
-        }
-
-        .hero::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 100%);
-            z-index: 1;
-        }
-
-        .hero * {
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 90%;
-            margin-bottom: 2rem;
-        }
-
         .btn-primary {
             background: #56854E;
             color: white;
@@ -136,7 +103,7 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
-            width: 90%;
+            width: 85%;
             max-width: 350px;
         }
 
@@ -224,7 +191,6 @@
             margin-top: 2rem;
         }
 
-        /* Mobile Optimizations */
         @media (max-width: 768px) {
             nav ul {
                 display: none;
@@ -237,32 +203,92 @@
                 padding: 1rem 0;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             }
-
+            .logo-container {
+                justify-content: center;  /* Center logo on mobile */
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+    
             .menu-toggle {
                 display: block;
             }
-
+    
             nav ul.active {
                 display: flex;
             }
-
-            .hero {
-                height: 60vh;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
         }
+    
+        /* Carousel styles (moved outside the media query) */
+        .carousel-container {
+            width: 95%;
+            position: relative;
+            overflow: hidden;
+            margin: 7rem auto; /* Center the carousel on the page */
+            
+        }
+    
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+    
+        .carousel-card {
+            min-width: 95%;
+            background: linear-gradient(135deg, #7AA087, #56854E);
+            color: white;
+            padding: 2rem;
+            margin: 1rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: left;
+            position: relative;
+        }
+    
+        .carousel-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+    
+        .carousel-card p {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+    
+        .stars {
+            color: gold;
+            font-size: 1.2rem;
+        }
+    
+        /* Navigation Buttons */
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+    
+        .carousel-btn {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+    
+        .carousel-btn:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+    </style>
     </style>
 </head>
 <body>
     <nav>
-        <div><img src="{% static 'images/logo.png' %}" alt="Logo" height="40"></div>
+        <div class="logo-container"><a href="{% url 'home' %}"><img src="{% static 'images/logo.jpg' %}" alt="Logo" height="75"></a></div>
         <div class="menu-toggle" onclick="toggleMenu()">☰</div>
         <ul>
             <li><a href="/Blog/">Tip & Thoughts</a></li>
@@ -275,28 +301,43 @@
     </nav>
 
 
-    <!-- Reviews Section -->
-    <section class="reviews-section">
-        <h2>Words from the Heart 💬</h2>
-        <div class="review-carousel">
-            <div class="review-card">
-                <h3>Sarah L.</h3>
-                <p>"Dvora Leah's guidance has been transformative. I feel more balanced and confident in my daily life."</p>
-                <p>⭐⭐⭐⭐⭐</p>
+    <div class="carousel-container">
+        <div class="carousel" id="carousel">
+            <div class="carousel-card">
+                <p>“Dvora's sessions helped me reconnect with parts of myself I didn’t even know were blocked. I feel lighter, more at peace, and finally able to sleep through the night.”</p>
+                <h3>Noa from Tel Aviv</h3>
+                <div class="stars">★★★★★</div>
             </div>
-            <div class="review-card">
-                <h3>Michael B.</h3>
-                <p>"I finally found someone who truly listens. The support I've received here has been invaluable."</p>
-                <p>⭐⭐⭐⭐⭐</p>
+            <div class="carousel-card">
+                <p>“After years of anxiety, I found in Dvora a guide who helped me bridge the gap between my mind and body. Her transpersonal approach was exactly what I needed to heal.”</p>
+                <h3>Emouna from Haifa</h3>
+                <div class="stars">★★★★★</div>
             </div>
-            <div class="review-card">
-                <h3>Emma W.</h3>
-                <p>"Highly professional and compassionate service. My mental health has never been better."</p>
-                <p>⭐⭐⭐⭐</p>
+            <div class="carousel-card">
+                <p>“Working with Dvora has been transformative. Her gentle yet profound guidance led me to uncover deep emotional patterns, and I finally feel free from old traumas.”</p>
+                <h3>Yael from Jerusalem</h3>
+                <div class="stars">★★★★★</div>
+            </div>
+            <div class="carousel-card">
+                <p>“I never imagined that healing could feel this natural. Dvora’s mind-body approach taught me how to truly listen to myself. I’m now more balanced, both emotionally and physically.”</p>
+                <h3>Keren from Ramat Gan</h3>
+                <div class="stars">★★★★★</div>
+            </div>
+            <div class="carousel-card">
+                <p>“Dvora’s sessions are like a safe haven. Each time I leave feeling grounded, more aware, and in tune with my inner world. She’s a gifted healer and a true professional.”</p>
+                <h3>Michal from Be'er Sheva</h3>
+                <div class="stars">★★★★★</div>
             </div>
         </div>
-    </section>
-
+    </div>
+    
+    
+        <!-- Navigation Buttons -->
+        <div class="carousel-nav">
+            <button class="carousel-btn" onclick="prevSlide()">‹</button>
+            <button class="carousel-btn" onclick="nextSlide()">›</button>
+        </div>
+    </div>
 
     <button class="contact-btn" onclick="openContactModal()">📞 Contact Me</button>
 
@@ -338,21 +379,28 @@
             }
         };
     </script>
-    <!-- jQuery & Slick.js -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-
-    <!-- Initialize the Carousel -->
     <script>
-        $(document).ready(function(){
-            $('.review-carousel').slick({
-                slidesToShow: 1,
-                autoplay: true,
-                autoplaySpeed: 3000,
-                dots: true,
-                arrows: false
-            });
-        });
+        let currentIndex = 0;
+        const carousel = document.getElementById('carousel');
+        const totalCards = document.querySelectorAll('.carousel-card').length;
+    
+        function showSlide(index) {
+            const offset = -index * 100;
+            carousel.style.transform = `translateX(${offset}%)`;
+        }
+    
+        function nextSlide() {
+            currentIndex = (currentIndex + 0.96) % totalCards;
+            showSlide(currentIndex);
+        }
+    
+        function prevSlide() {
+            currentIndex = (currentIndex - 0.96 + totalCards) % totalCards;
+            showSlide(currentIndex);
+        }
+    
+        // Auto-rotate every 7 seconds
+        setInterval(nextSlide, 7000);
     </script>
 </body>
 </html>
