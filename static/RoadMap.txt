@@ -1,6 +1,11 @@
 
 ## **Roadmap**
 
+
+
+---
+
+
 ### **1. Client Portal**
 #### Features:
 V Login system for clients.
@@ -31,6 +36,7 @@ V Design a dashboard view to display:
 
 
 
+---
 
 
 3. Appointment Bookings Module inside the personalized dashboard:
@@ -57,6 +63,7 @@ V Design a dashboard view to display:
      - Authorize with OAuth2.
      - Push and pull appointment data to/from Google Calendar.
 
+---
 
 
 
@@ -109,27 +116,6 @@ V Design a dashboard view to display:
 
 ---
 
-
-
-
-### **5. Reviews Carousel**
-#### Features:
-- Display client reviews in a rotating carousel.
-- Allow clients to submit reviews for approval.
-
-#### Steps:
-1. **Model and Submission**:
-   - Create a `Review` model with fields like `client`, `review_text`, `rating`, `is_approved`.
-   - Build a form for clients to submit reviews.
-
-2. **Admin Approval System**:
-   - Add a moderation workflow to approve or reject reviews.
-
-3. **Frontend Carousel**:
-   - Use a library like `slick.js` or Bootstrap’s carousel for review rotation.
-
----
-
 ### **6. Mental Health Assessments**
 #### Features:
 - Admin-only functionality to fill out assessments for clients.
@@ -174,8 +160,7 @@ V Design a dashboard view to display:
 - Build the reviews carousel.
 - Implement mental health assessments for admin use.
 
+---
 
 
-
-*fit to night them users
 *connect to users Db
