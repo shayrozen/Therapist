@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Find the Right Therapy for You, {{ client.name }}</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">See Your Recommendation</button>
+  </form>
+  <a href="{% url 'assessment_list' client.id %}">View Past Assessments</a>
+{% endblock %}

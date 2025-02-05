@@ -1,6 +1,6 @@
 from allauth.account.forms import SignupForm
 from django import forms
-from .models import CustomUser
+from .models import CustomUser, Assessment
 
 class ClientSignupForm(SignupForm):
     def save(self, request):
@@ -15,3 +15,12 @@ class DiaryEntryForm(forms.ModelForm):
     class Meta:
         model = DiaryEntry
         fields = ['content']
+        
+        
+
+
+class AssessmentForm(forms.ModelForm):
+    class Meta:
+        model = Assessment
+        fields = ['assessment_type', 'score', 'notes']
+

@@ -1,0 +1,359 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tips & Thoughts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: radial-gradient(circle at center, #f5f7fa, rgb(128, 175, 146));
+            background-size: 150% 150%;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            animation: gradientShift 1s infinite ease-in-out;
+        }
+        @keyframes gradientShift {
+            0% { background-position: center; }
+            25% { background-position: 60% 40%; }
+            50% { background-position: center; }
+            75% { background-position: 40% 60%; }
+            100% { background-position: center; }
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: #B5C5C4;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+            background-color: #B5C5C4;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #56854E;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #7AA087;
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+        .blog-post {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .blog-post:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .blog-post h2 {
+            font-family: 'Playfair Display', serif;
+            color: #56854E;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+
+        .blog-post p {
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: #555;
+            font-family: 'Merriweather', serif;
+        }
+
+        .blog-post .date {
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        footer {
+            background: #333;
+            color: white;
+            padding: 1rem;
+            {% comment %} margin-top: 1rem; {% endcomment %}
+            text-align: center;
+            min-width: 100px;
+        }
+        .hero-section {
+            position: relative;
+            width: 100%;
+            height: 70vh;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7);
+            animation: panVideo 20s infinite alternate ease-in-out;
+        }
+
+        @keyframes panVideo {
+            from {
+                object-position: center 100%;
+            }
+            to {
+                object-position: center 0%;
+            }
+        }
+
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        .divider {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 4rem;
+            margin-top: 4rem;
+        }
+        
+        .divider img {
+            width: 35%;
+            opacity: 0.7;
+        }
+        .btn-primary {
+            background: #56854E;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #7AA087;
+        }
+
+    
+        @media (max-width: 768px) {
+            body{
+                overflow-x: hidden; /* Prevent horizontal scroll */
+            }
+            nav ul {
+                display: none;
+                flex-direction: column;
+                background: white;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                padding: 1rem 0;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .logo-container {
+                justify-content: center;
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+            .btn-primary {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            .content-wrapper {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo-container"><a href="{% url 'home' %}"><img src="{% static 'images/logo.jpg' %}" alt="Logo" height="60"></a></div>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <ul>
+            <li><a href="/Blog/">Tip & Thoughts</a></li>
+            <li><a href="/Assessment/">Online Assessment</a></li>
+            <li><a href="/Experiences/">Shared Experiences</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/about/">My Story 💕</a></li>
+            <li><a href="/dashboard/">Personalized Dashboard</a></li>
+        </ul>
+    </nav>
+
+    <div class="hero-section">
+        <video autoplay muted loop class="hero-video">
+            <source src="{% static 'videos/blog-bg.mp4' %}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero-content">
+            <h1>My own Experience </br> Tips & Thoughts</h1>
+            <p>Explore insights on transpersonal therapy, holistic healing, and mindfulness practices.</p>
+            <a href="#blog-posts" class="btn-primary">Read Our Latest Posts</a>
+        </div>
+    </div>
+
+    <body>
+        <nav>
+            <div class="logo-container"><a href="{% url 'home' %}"><img src="{% static 'images/logo.jpg' %}" alt="Logo" height="60"></a></div>
+            <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+            <ul>
+                <li><a href="/Blog/">Tip & Thoughts</a></li>
+                <li><a href="/Assessment/">Online Assessment</a></li>
+                <li><a href="/Experiences/">Shared Experiences</a></li>
+                <li><a href="/services/">Services</a></li>
+                <li><a href="/about/">My Story 💕</a></li>
+                <li><a href="/dashboard/">Personalized Dashboard</a></li>
+            </ul>
+        </nav>
+        
+        <div class="divider">
+            <img src="{% static 'images/divider-leaves.svg' %}" alt="Decorative divider with leaves">
+        </div>
+
+        <section id="blog-posts">
+        <div class="content-wrapper">
+            <div class="blog-post">
+                <h2>The Power of Transpersonal Therapy</h2>
+                <div class="date">Posted on February 1, 2025</div>
+                    <p>Transpersonal therapy has been a transformative force in my life. It goes beyond traditional therapy by integrating spiritual dimensions, helping me connect with my deeper self and the universe. This holistic approach has guided me through profound self-discovery and healing.</p>
+                    <p>My journey with transpersonal therapy began during a challenging period. I felt disconnected and lost, searching for meaning and purpose. Through transpersonal therapy, I learned to embrace my spiritual experiences and integrate them into my healing process.</p>
+                    <p>One of the most impactful aspects of this therapy was the emphasis on mindfulness and meditation. These practices helped me cultivate inner peace and clarity, allowing me to navigate life's challenges with greater resilience and grace.</p>
+                    <p>Transpersonal therapy also introduced me to the concept of interconnectedness. I realized that my well-being is deeply linked to the well-being of others and the world around me. This awareness has fostered a sense of compassion and empathy, enriching my relationships and enhancing my overall quality of life.</p>
+                    <p>In conclusion, transpersonal therapy has been a powerful tool for personal growth and healing. It has opened my heart and mind to new possibilities, guiding me towards a more fulfilling and meaningful life. I am grateful for this journey and the profound insights it has brought into my life.</p>
+                </div>
+
+                <div class="divider">
+                    <img src="{% static 'images/divider-leaves.svg' %}" alt="Decorative divider with leaves">
+                </div>
+            
+            <div class="blog-post">
+                <h2>Holistic Healing: Mind, Body, and Spirit</h2>
+                <div class="date">Posted on January 20, 2025</div>
+                <p>Holistic therapy addresses the interconnectedness of the mind, body, and spirit. It’s a comprehensive approach to wellness, recognizing that emotional health is tied to physical and spiritual well-being.</p>
+            </div>
+    
+            <div class="divider">
+                <img src="{% static 'images/divider-leaves.svg' %}" alt="Decorative divider with leaves">
+            </div>
+
+            <div class="blog-post">
+                <h2>Meditation for Inner Peace</h2>
+                <div class="date">Posted on January 5, 2025</div>
+                <p>Meditation is a transformative practice that fosters mindfulness and calm. Regular practice can reduce stress, improve focus, and enhance overall mental clarity.</p>
+            </div>
+    
+            <div class="divider">
+                <img src="{% static 'images/divider-leaves.svg' %}" alt="Decorative divider with leaves">
+            </div>
+
+            <div class="blog-post">
+                <h2>Exploring Guided Imagery</h2>
+                <div class="date">Posted on December 15, 2024</div>
+                <p>Guided imagery leverages the power of visualization to promote relaxation and healing. By focusing on positive mental images, you can reduce anxiety and improve emotional health.</p>
+            </div>
+    
+            <div class="divider">
+                <img src="{% static 'images/divider-leaves.svg' %}" alt="Decorative divider with leaves">
+            </div>
+
+            <div class="blog-post">
+                <h2>Family Constellation Therapy: Healing Generational Wounds</h2>
+                <div class="date">Posted on November 30, 2024</div>
+                <p>Family Constellation therapy reveals hidden dynamics within family systems. It helps uncover and address generational patterns, bringing clarity and resolution to longstanding issues.</p>
+            </div>
+        </div>    
+    </section>
+    <footer>
+        <p>© 2025 Dvora Leah's Practice - All Rights Reserved</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector("nav ul").classList.toggle("active");
+        }
+    </script>
+</body>
+</html>

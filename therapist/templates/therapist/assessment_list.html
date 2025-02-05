@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Assessments for {{ client.name }}</h2>
+  <ul>
+    {% for assessment in assessments %}
+      <li>{{ assessment.assessment_type.name }} - Score: {{ assessment.score }} - {{ assessment.notes }}</li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'add_assessment' client.id %}">Take a New Assessment</a>
+{% endblock %}

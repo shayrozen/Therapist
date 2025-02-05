@@ -13,5 +13,7 @@ urlpatterns = [
     path('userlist/', user_list, name='user_list'),
     path('dashboard/diary/add/', views.add_diary_entry, name='add_diary_entry'),
     path('Experiences/', views.Experiences, name='Experiences'),
-
+    path('Blog/', views.Blog, name='Blog'),
+    path('client/<int:client_id>/assessments/', views.assessment_list, name='assessment_list'),
+    path('client/<int:client_id>/add/', views.add_assessment, name='add_assessment'),
 ]

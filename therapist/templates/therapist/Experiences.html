@@ -16,15 +16,31 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(to bottom, #f5f7fa, #B5C5C4);
-            color: white;
+            font-family: 'Open Sans', sans-serif;
+            background: radial-gradient(circle at center, #f5f7fa, rgb(128, 175, 146));
+            background-size: 150% 150%;
+            color: #333;
             display: flex;
-            justify-content: center;
-            align-items: center;
             flex-direction: column;
             min-height: 100vh;
-            width: 100%;
+            animation: gradientShift 1s infinite ease-in-out;
+        }
+        @keyframes gradientShift {
+            0% {
+                background-position: center;
+            }
+            25% {
+                background-position: 60% 40%;
+            }
+            50% {
+                background-position: center;
+            }
+            75% {
+                background-position: 40% 60%;
+            }
+            100% {
+                background-position: center;
+            }
         }
 
         nav {
@@ -71,15 +87,23 @@
             color: #7AA087;
         }
 
+        .content-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            width: 100%;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
         .carousel-container {
             color: black;
             height: auto;
             text-align: center;
             position: relative;
-            width: 100%;
-            margin: 8rem auto 4rem;
+            width: 70%;
+            margin: 0 1rem 1rem 0;
             overflow: hidden;
-            padding: 1rem;
         }
 
         .carousel-track {
@@ -150,14 +174,6 @@
             background-color: #B5C5C4;
         }
 
-        .illustration {
-            position: absolute;
-            right: -50px;
-            bottom: -20px;
-            width: 120px;
-            height: auto;
-            opacity: 0.8;
-        }
 
         .btn-primary {
             background: #56854E;
@@ -178,11 +194,54 @@
             background: #333;
             color: white;
             padding: 1rem;
-            margin-top: 2rem;
+            {% comment %} margin-top: 1rem; {% endcomment %}
             text-align: center;
-            min-width: 700px;
+            min-width: 100px;
+        }
+        .hero-section {
+            position: relative;
+            width: 100%;
+            height: 70vh;
+            overflow: hidden;
         }
 
+        .hero-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7);
+            animation: panVideo 20s infinite alternate ease-in-out;
+        }
+
+        @keyframes panVideo {
+            from {
+                object-position: center 100%;
+            }
+            to {
+                object-position: center 0%;
+            }
+        }
+
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+    
         @media (max-width: 768px) {
             body{
                 overflow-x: hidden; /* Prevent horizontal scroll */
@@ -205,10 +264,6 @@
                 margin-bottom: 0.5rem;
             }
 
-            .illustration {
-                display: none;
-            }
-
             .menu-toggle {
                 display: block;
             }
@@ -229,6 +284,24 @@
                 padding: 0.6rem 1.2rem;
                 font-size: 0.9rem;
             }
+            .content-wrapper {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .carousel-container {
+                width: 100%;
+                margin: 0 0 4rem 0;
+            }
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+
         }
     </style>
 </head>
@@ -246,66 +319,77 @@
         </ul>
     </nav>
 
-    <div class="carousel-container">
-        <div class="carousel-track" id="carouselTrack">
-            <div class="carousel-card">
-                <p>“Dvora's sessions helped me reconnect with parts of myself I didn’t even know were blocked. I feel lighter, more at peace, and finally able to sleep through the night.”</p>
-                <div class="profile">
-                    <img src="{% static 'images/profile-avatar.png' %}" alt="Noa from Tel Aviv">
-                    <h3>Noa from Tel Aviv</h3>
-                </div>
-                <div class="stars">★★★★★</div>
-            </div>
-
-            <div class="carousel-card">
-                <p>“After years of anxiety, I found in Dvora a guide who helped me bridge the gap between my mind and body. Her transpersonal approach was exactly what I needed to heal.”</p>
-                <div class="profile">
-                    <img src="{% static 'images/profile-avatar.png' %}" alt="Emouna from Haifa">
-                    <h3>Emouna from Haifa</h3>
-                </div>
-                <div class="stars">★★★★★</div>
-            </div>
-
-            <div class="carousel-card">
-                <p>“Working with Dvora has been transformative. Her gentle yet profound guidance led me to uncover deep emotional patterns, and I finally feel free from old traumas.”</p>
-                <div class="profile">
-                    <img src="{% static 'images/profile-avatar.png' %}" alt="Yael from Jerusalem">
-                    <h3>Yael from Jerusalem</h3>
-                </div>
-                <div class="stars">★★★★★</div>
-            </div>
-
-            <div class="carousel-card">
-                <p>“I never imagined that healing could feel this natural. Dvora’s mind-body approach taught me how to truly listen to myself. I’m now more balanced, both emotionally and physically.”</p>
-                <div class="profile">
-                    <img src="{% static 'images/profile-avatar.png' %}" alt="Yael from Jerusalem">
-                    <h3>Keren from Ramat Gan</h3>
-                </div>
-                <div class="stars">★★★★★</div>
-            </div>
-
-            <div class="carousel-card">
-                <p>“Dvora’s sessions are like a safe haven. Each time I leave feeling grounded, more aware, and in tune with my inner world. She’s a gifted healer and a true professional.”</p>
-                <div class="profile">
-                    <img src="{% static 'images/profile-avatar.png' %}" alt="Yael from Jerusalem">
-                    <h3>Michal from Be'er Sheva</h3>
-                </div>
-                <div class="stars">★★★★★</div>
-            </div>
+    <div class="hero-section">
+        <video autoplay muted loop class="hero-video">
+            <source src="{% static 'videos/therapy_background.mp4' %}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero-content">
+            <h1>Discover Transformative Journeys</h1>
+            <p>Hear how others have found balance, healing, and peace.</p>
+            <a href="/Registration/" class="btn-primary">Join the Journey</a>
         </div>
-    
+    </div>
 
-        <div class="carousel-dots">
-            <span class="dot active" onclick="showSlide(0)"></span>
-            <span class="dot" onclick="showSlide(1)"></span>
-            <span class="dot" onclick="showSlide(2)"></span>
-            <span class="dot" onclick="showSlide(3)"></span>
-            <span class="dot" onclick="showSlide(4)"></span>
+    <div class="content-wrapper">
+        <div class="carousel-container">
+            <div class="carousel-track" id="carouselTrack">
+                <div class="carousel-card">
+                    <p>“Dvora's sessions helped me reconnect with parts of myself I didn’t even know were blocked. I feel lighter, more at peace, and finally able to sleep through the night.”</p>
+                    <div class="profile">
+                        <img src="{% static 'images/profile-avatar.png' %}" alt="Noa from Tel Aviv">
+                        <h3>Noa from Tel Aviv</h3>
+                    </div>
+                    <div class="stars">★★★★★</div>
+                </div>
+
+                <div class="carousel-card">
+                    <p>“After years of anxiety, I found in Dvora a guide who helped me bridge the gap between my mind and body. Her transpersonal approach was exactly what I needed to heal.”</p>
+                    <div class="profile">
+                        <img src="{% static 'images/profile-avatar.png' %}" alt="Emouna from Haifa">
+                        <h3>Emouna from Haifa</h3>
+                    </div>
+                    <div class="stars">★★★★★</div>
+                </div>
+
+                <div class="carousel-card">
+                    <p>“Working with Dvora has been transformative. Her gentle yet profound guidance led me to uncover deep emotional patterns, and I finally feel free from old traumas.”</p>
+                    <div class="profile">
+                        <img src="{% static 'images/profile-avatar.png' %}" alt="Yael from Jerusalem">
+                        <h3>Yael from Jerusalem</h3>
+                    </div>
+                    <div class="stars">★★★★★</div>
+                </div>
+
+                <div class="carousel-card">
+                    <p>“I never imagined that healing could feel this natural. Dvora’s mind-body approach taught me how to truly listen to myself. I’m now more balanced, both emotionally and physically.”</p>
+                    <div class="profile">
+                        <img src="{% static 'images/profile-avatar.png' %}" alt="Yael from Jerusalem">
+                        <h3>Keren from Ramat Gan</h3>
+                    </div>
+                    <div class="stars">★★★★★</div>
+                </div>
+
+                <div class="carousel-card">
+                    <p>“Dvora’s sessions are like a safe haven. Each time I leave feeling grounded, more aware, and in tune with my inner world. She’s a gifted healer and a true professional.”</p>
+                    <div class="profile">
+                        <img src="{% static 'images/profile-avatar.png' %}" alt="Yael from Jerusalem">
+                        <h3>Michal from Be'er Sheva</h3>
+                    </div>
+                    <div class="stars">★★★★★</div>
+                </div>
+            </div>
+        
+
+            <div class="carousel-dots">
+                <span class="dot active" onclick="showSlide(0)"></span>
+                <span class="dot" onclick="showSlide(1)"></span>
+                <span class="dot" onclick="showSlide(2)"></span>
+                <span class="dot" onclick="showSlide(3)"></span>
+                <span class="dot" onclick="showSlide(4)"></span>
+            </div>
+            <div></br></div>
         </div>
-        <div></br></div>
-        <div><a href="/Registration/" class="btn-primary">Be the next success story!</a></div>
-
-        <img src="{% static 'images/illustration.png' %}" alt="Illustration" class="illustration">
     </div>
     
     <footer>

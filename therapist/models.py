@@ -34,3 +34,32 @@ class DiaryEntry(models.Model):
     
     def __str__(self):
         return self.title
+
+
+
+class Client(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.EmailField(unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+    
+    
+class AssessmentType(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+    
+    
+class Assessment(models.Model):
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    assessment_type = models.ForeignKey(AssessmentType, on_delete=models.CASCADE)
+    score = models.IntegerField()
+    notes = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.client.name} - {self.assessment_type.name}"
