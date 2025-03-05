@@ -1,42 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Dvora Leah</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
-</head>
-<body>
-    <header>
-        <h1>About Dvora Leah</h1>
-    </header>
-    <section class="about-hero">
-        <img src="{% static 'images/about-hero.jpg' %}" alt="Therapy Session" class="hero-image">
-        <h2>Meet Dvora Leah</h2>
-        <p>Your trusted partner in mental health and personal growth.</p>
-    </section>
-    <section class="about-details">
-        <div class="about-card">
-            <h2>About Me</h2>
-            <p>Hello! I’m Dvora Leah, a licensed therapist specializing in helping individuals and families navigate life’s challenges. With over 10 years of experience, I am dedicated to providing a safe and supportive space for healing and growth.</p>
+{% extends 'therapist/base.html' %}
+{% load static %}
+
+{% block title %}הסיפור שלי{% endblock %}
+
+{% block content %}
+
+<div class="hero-section">
+    <video autoplay muted loop class="hero-video">
+        <source src="{% static 'videos/about-video.mp4' %}" type="video/mp4">
+        הדפדפן שלך אינו תומך בתגית הווידאו.
+    </video>
+    <div class="hero-content">
+        <h1>הסיפור שלי</h1>
+        <p>ליווי, תמיכה וצמיחה – מתוך חיבור לשורשים, לעצמך ולמסע הריפוי האישי שלך.</p>
+    </div>
+</div>
+
+<div class="divider">
+    <img src="{% static 'images/divider-leaves.svg' %}" alt="קו מפריד דקורטיבי עם עלים">
+</div>
+
+<section class="about-details">
+    <div class="content-wrapper">
+        <div class="blog-post">
+            <h2>מי אני?</h2>
+            <p>אני דבורה לאה, מטפלת בגישה טרנספרסונלית, בוגרת מכללת רידמן ובעלת הכשרה בטתא הילינג. במשך שנים רבות אני מלווה נשים במסע שלהן לריפוי ולהתפתחות אישית, מתוך חיבור עמוק לאדם, לנפש ולדרך הייחודית של כל אחת.</p>
+            <p>כבר מעל שבע שנים שאני רכזת, משלבת ומורה לחינוך מיוחד, ומפגשיי עם תלמידים ותלמידות, אמהות ואנשים מרקעים שונים חידדו בי את ההבנה שלכל אחת מאיתנו יש סיפור חיים עמוק – ובתוכו גם הכוח לשינוי, ריפוי וצמיחה.</p>
+            <p>העבודה שלי נובעת מתוך שליחות אמיתית: לעזור לנשים למצוא מקום בטוח עבור עצמן, להתחבר מחדש לקול הפנימי שלהן, ולהרגיש יותר יציבות, רגועות וחופשיות.</p>
         </div>
-        <div class="about-card">
-            <h2>Qualifications</h2>
-            <ul>
-                <li>M.A. in Clinical Psychology</li>
-                <li>Licensed Marriage and Family Therapist (LMFT)</li>
-                <li>Certified Cognitive Behavioral Therapist (CBT)</li>
-            </ul>
+
+        <div class="blog-post">
+            <h2>הדרך שלי לעולם הריפוי</h2>
+            <p>המסע שלי אל עולם הריפוי התחיל מתוך אהבה עמוקה ללמידה ולעשייה חינוכית. תמיד הרגשתי חיבור חזק לנפש האדם ולמורכבות שבה, והחיים עצמם הובילו אותי להעמיק בעולם הזה – גם דרך עבודה עם ילדים ונוער וגם מתוך מסע אישי של גילוי עצמי.</p>
+            <p>למדתי את הגישה הטרנספרסונלית, שמביאה איתה הסתכלות רחבה על האדם – לא רק כישות רגשית, אלא כמי שיש לו ממד רוחני עמוק. גישה זו מאפשרת לאדם לחוות ריפוי דרך עבודה עם התת-מודע, עם התודעה הגבוהה ועם הגוף עצמו. במקביל, נחשפתי לשיטת טתא הילינג, שמבוססת על כוח המחשבה והחיבור העמוק שלנו לאנרגיה של ריפוי.</p>
+            <p>עם הזמן, הבנתי שהייעוד שלי הוא לשלב בין כלים טיפוליים עמוקים לבין החוכמה היהודית והמסורתית שמלווה אותנו – וליצור מקום שבו נשים יכולות להרגיש באמת בבית.</p>
         </div>
-        <div class="about-card">
-            <h2>My Approach</h2>
-            <p>I believe in a personalized approach to therapy, tailored to meet each client's unique needs. Whether you're seeking support for anxiety, relationship challenges, or personal growth, I am here to help you achieve your goals.</p>
+
+        <div class="blog-post">
+            <h2>איך אני יכולה לעזור לך?</h2>
+            <p>אני מאמינה שהריפוי מתחיל מהיכולת לעצור, להקשיב ולהיות נוכחת ברגע. כל אישה מגיעה לטיפול עם עולם שלם של חוויות, זיכרונות, כאבים וגם שאיפות וחלומות. אני כאן כדי להחזיק עבורך מרחב בטוח – שבו מותר לך לשחרר, להתחזק ולגלות את הדרך שלך.</p>
+            <p>הטיפול שאני מציעה מותאם באופן אישי לכל אחת, ומשלב בין כלים של **עבודה רגשית עמוקה, חיבור לגוף ולנפש, תרגולי נשימה ומיינדפולנס, והכוונה רגשית ורוחנית**. התהליך מתרחש בקצב שלך, עם הקשבה מלאה למקום שבו את נמצאת.</p>
+            <p>החזון שלי הוא שכל אישה תוכל למצוא בתוכה את האיזון הפנימי, להרגיש שלמה עם עצמה, ולחיות מתוך חופש אמיתי – חופש להיות מי שהיא באמת.</p>
         </div>
-    </section>
-    <footer>
-        <p>© 2025 Dvora Leah's Practice</p>
-    </footer>
-</body>
-</html>
+    </div>
+</section>
+
+<div class="divider">
+    <img src="{% static 'images/divider-leaves.svg' %}" alt="קו מפריד דקורטיבי עם עלים">
+</div>
+
+
+<script>
+    function toggleMenu() {
+        document.querySelector("nav ul").classList.toggle("active");
+    }
+</script>
+
+{% endblock %}

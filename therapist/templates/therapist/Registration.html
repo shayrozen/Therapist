@@ -1,0 +1,31 @@
+{% extends 'therapist/base.html' %}
+{% load static %}
+
+{% block title %}הרשמה{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>טופס הרשמה </h2>
+    <p>אנא מלא את פרטיך כדי להירשם ולהתחיל להשתמש במערכת.</p>
+
+    <form method="post" class="registration-form">
+        {% csrf_token %}
+
+        <p>כבר רשום? <a href="{% url 'account_login' %}">התחבר כאן</a></p>
+
+        <label for="id_full_name">שם מלא:</label>
+        {{ form.full_name }}
+
+        <label for="id_email">כתובת דוא"ל:</label>
+        {{ form.email }}
+
+        <label for="id_password1">סיסמה:</label>
+        {{ form.password1 }}
+
+        <label for="id_password2">אימות סיסמה:</label>
+        {{ form.password2 }}
+
+        <button type="submit" class="btn-primary">הרשמה</button>
+    </form>
+</div>
+{% endblock %}

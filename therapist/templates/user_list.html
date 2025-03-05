@@ -1,97 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User List</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            margin: 0;
-            padding: 0;
-        }
+{% extends 'therapist/base.html' %}
+{% load static %}
 
-        .container {
-            width: 80%;
-            margin: 50px auto;
-            background: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-        }
+{% block title %}User List{% endblock %}
 
-        h1 {
-            text-align: center;
-            color: #333;
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
+{% block content %}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-
-        table th, table td {
-            padding: 10px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-
-        table th {
-            background-color: #f3f3f3;
-            color: #555;
-        }
-
-        table tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        .back-link {
-            display: inline-block;
-            margin-top: 20px;
-            text-decoration: none;
-            color: #007bff;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-
-        .back-link:hover {
-            color: #0056b3;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
+<div class="divider">
+    <img src="{% static 'images/divider-leaves.svg' %}" alt="Decorative divider with leaves">
+</div>
+<div class="content-wrapper">
+    <div class="blog-post">
         <h1>User List</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for user in users %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{ user.username }}</td>
-                    <td>{{ user.email }}</td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="3">No users found.</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <a href="/" class="back-link">← Back to Home</a>
-    </div>
-</body>
-</html>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Username</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No users found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="/" class="back-link">← Back to Home</a>
+</div>
+</div>
+
+{% endblock %}

@@ -1,11 +1,31 @@
-{% extends 'base.html' %}
+{% extends 'therapist/base.html' %}
+{% load static %}
 
 {% block content %}
-  <h2>Find the Right Therapy for You, {{ client.name }}</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">See Your Recommendation</button>
-  </form>
-  <a href="{% url 'assessment_list' client.id %}">View Past Assessments</a>
+<div class="content-wrapper">
+    <div class="blog-post">
+        <h2>Find the Right Therapy for You{% if client %}, {{ client.name }}{% endif %}</h2>
+
+        <form method="post" class="styled-form">
+          {% csrf_token %}
+          
+          <label for="assessment_type">Assessment Type:</label>
+          {{ form.assessment_type }}
+          
+          <label for="score">Select Your Score:</label>
+          {{ form.score }}
+          
+          <label for="notes">Additional Notes:</label>
+          {{ form.notes }}
+          
+          <button type="submit" class="btn-primary">See Your Recommendation</button>
+        </form>
+
+        <div class="assessment-links">
+            {% if client %}
+                <a href="{% url 'assessment_list' client.id %}" class="btn-secondary">View Past Assessments</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}

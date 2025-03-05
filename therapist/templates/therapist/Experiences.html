@@ -1,385 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Shared Experiences</title>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+{% extends 'therapist/base.html' %}
+{% load static %}
 
-        body {
-            font-family: 'Open Sans', sans-serif;
-            background: radial-gradient(circle at center, #f5f7fa, rgb(128, 175, 146));
-            background-size: 150% 150%;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            animation: gradientShift 1s infinite ease-in-out;
-        }
-        @keyframes gradientShift {
-            0% {
-                background-position: center;
-            }
-            25% {
-                background-position: 60% 40%;
-            }
-            50% {
-                background-position: center;
-            }
-            75% {
-                background-position: 40% 60%;
-            }
-            100% {
-                background-position: center;
-            }
-        }
+{% block title %}מטופלים מספרים{% endblock %}
 
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-            background: #B5C5C4;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+{% block content %}
 
-        .logo-container {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-        }
-
-        .menu-toggle {
-            display: none;
-            font-size: 2rem;
-            cursor: pointer;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 1.5rem;
-            background-color: #B5C5C4;
-        }
-
-        nav ul li a {
-            text-decoration: none;
-            color: #56854E;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-
-        nav ul li a:hover {
-            color: #7AA087;
-        }
-
-        .content-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            width: 100%;
-            margin-top: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .carousel-container {
-            color: black;
-            height: auto;
-            text-align: center;
-            position: relative;
-            width: 70%;
-            margin: 0 1rem 1rem 0;
-            overflow: hidden;
-        }
-
-        .carousel-track {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-            cursor: grab;
-        }
-
-        .carousel-card {
-            min-width: 100%;
-            background: transparent;
-            padding: 1.5rem;
-            box-shadow: none;
-            text-align: center;
-        }
-
-        .carousel-card p {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-        }
-
-        .carousel-card h3 {
-            font-size: 1rem;
-            margin: 0.5rem 0;
-            color: #7AA087;
-        }
-
-        .profile {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 1rem;
-        }
-
-        .profile img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-right: 0.5rem;
-        }
-
-        .stars {
-            color: #FFD700;
-            font-size: 2rem;
-            margin: 0.5rem 0;
-            text-shadow: 1px 1px 2px black;
-
-        }
-
-        .carousel-dots {
-            display: flex;
-            justify-content: center;
-            margin: 1rem 0;
-        }
-
-        .dot {
-            height: 10px;
-            width: 10px;
-            margin: 0 5px;
-            background-color: #7AA087;
-            border-radius: 50%;
-            display: inline-block;
-            transition: background-color 0.3s ease;
-            cursor: pointer;
-        }
-
-        .dot.active {
-            background-color: #B5C5C4;
-        }
-
-
-        .btn-primary {
-            background: #56854E;
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 5px;
-            font-size: 1rem;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background 0.3s;
-        }
-
-        .btn-primary:hover {
-            background: #7AA087;
-        }
-
-        footer {
-            background: #333;
-            color: white;
-            padding: 1rem;
-            {% comment %} margin-top: 1rem; {% endcomment %}
-            text-align: center;
-            min-width: 100px;
-        }
-        .hero-section {
-            position: relative;
-            width: 100%;
-            height: 70vh;
-            overflow: hidden;
-        }
-
-        .hero-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: brightness(0.7);
-            animation: panVideo 20s infinite alternate ease-in-out;
-        }
-
-        @keyframes panVideo {
-            from {
-                object-position: center 100%;
-            }
-            to {
-                object-position: center 0%;
-            }
-        }
-
-        .hero-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            color: white;
-            font-family: 'Playfair Display', serif;
-        }
-
-        .hero-content h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .hero-content p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-        }
-    
-        @media (max-width: 768px) {
-            body{
-                overflow-x: hidden; /* Prevent horizontal scroll */
-            }
-            nav ul {
-                display: none;
-                flex-direction: column;
-                background: white;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                padding: 1rem 0;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            }
-
-            .logo-container {
-                justify-content: center;
-                width: 100%;
-                margin-bottom: 0.5rem;
-            }
-
-            .menu-toggle {
-                display: block;
-            }
-
-            nav ul.active {
-                display: flex;
-            }
-
-            .carousel-card p {
-                font-size: 1rem;
-            }
-
-            .carousel-card h3 {
-                font-size: 0.9rem;
-            }
-
-            .btn-primary {
-                padding: 0.6rem 1.2rem;
-                font-size: 0.9rem;
-            }
-            .content-wrapper {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .carousel-container {
-                width: 100%;
-                margin: 0 0 4rem 0;
-            }
-            .hero-content h1 {
-                font-size: 2rem;
-            }
-
-            .hero-content p {
-                font-size: 1rem;
-            }
-
-
-        }
-    </style>
-</head>
-<body>
-    <nav>
-        <div class="logo-container"><a href="{% url 'home' %}"><img src="{% static 'images/logo.jpg' %}" alt="Logo" height="60"></a></div>
-        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-        <ul>
-            <li><a href="/Blog/">Tip & Thoughts</a></li>
-            <li><a href="/Assessment/">Online Assessment</a></li>
-            <li><a href="/Experiences/">Shared Experiences</a></li>
-            <li><a href="/services/">Services</a></li>
-            <li><a href="/about/">My Story 💕</a></li>
-            <li><a href="/dashboard/">Personalized Dashboard</a></li>
-        </ul>
-    </nav>
-
-    <div class="hero-section">
-        <video autoplay muted loop class="hero-video">
-            <source src="{% static 'videos/therapy_background.mp4' %}" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <div class="hero-content">
-            <h1>Discover Transformative Journeys</h1>
-            <p>Hear how others have found balance, healing, and peace.</p>
-            <a href="/Registration/" class="btn-primary">Join the Journey</a>
-        </div>
+<div class="hero-section">
+    <video autoplay muted loop class="hero-video">
+        <source src="{% static 'videos/Experiences.mp4' %}" type="video/mp4">
+        הדפדפן שלך אינו תומך בתגית הווידאו.
+    </video>
+    <div class="hero-content">
+        <h1>סיפורי מסע ושינוי</h1>
+        <p>קראו כיצד אחרים מצאו איזון, ריפוי ושקט פנימי.</p>
+        <a href="/Registration/" class="btn-primary">הצטרפו למסע</a>
     </div>
+</div>
 
+<div class="divider">
+    <img src="{% static 'images/divider-leaves.svg' %}" alt="קו מפריד דקורטיבי עם עלים">
+</div>
+
+<div class="Experiences">
     <div class="content-wrapper">
         <div class="carousel-container">
             <div class="carousel-track" id="carouselTrack">
+
                 <div class="carousel-card">
-                    <p>“Dvora's sessions helped me reconnect with parts of myself I didn’t even know were blocked. I feel lighter, more at peace, and finally able to sleep through the night.”</p>
+                    <p>“המפגשים עם דבורה לאה עזרו לי להתחבר מחדש לעצמי ולשחרר מחסומים שלא ידעתי על קיומם. אני מרגישה קלילה יותר, שלמה יותר, ולראשונה ישנה בשקט בלילה.”</p>
                     <div class="profile">
-                        <img src="{% static 'images/profile-avatar.png' %}" alt="Noa from Tel Aviv">
-                        <h3>Noa from Tel Aviv</h3>
+                        <img src="{% static 'images/profile-avatar.png' %}" alt="נועה מתל אביב">
+                        <h3>נועה, תל אביב</h3>
                     </div>
                     <div class="stars">★★★★★</div>
                 </div>
 
                 <div class="carousel-card">
-                    <p>“After years of anxiety, I found in Dvora a guide who helped me bridge the gap between my mind and body. Her transpersonal approach was exactly what I needed to heal.”</p>
+                    <p>“לאחר שנים של חרדה מתמשכת, מצאתי אצל דבורה לאה מרחב בטוח לריפוי. השיטה הטרנספרסונלית שלה עזרה לי לגשר בין הגוף לנפש, בדיוק מה שהייתי צריכה.”</p>
                     <div class="profile">
-                        <img src="{% static 'images/profile-avatar.png' %}" alt="Emouna from Haifa">
-                        <h3>Emouna from Haifa</h3>
+                        <img src="{% static 'images/profile-avatar.png' %}" alt="אמונה מחיפה">
+                        <h3>אמונה, חיפה</h3>
                     </div>
                     <div class="stars">★★★★★</div>
                 </div>
 
                 <div class="carousel-card">
-                    <p>“Working with Dvora has been transformative. Her gentle yet profound guidance led me to uncover deep emotional patterns, and I finally feel free from old traumas.”</p>
+                    <p>“העבודה עם דבורה לאה הייתה עבורי מסע משחרר. בהדרכתה הרכה והעמוקה, הצלחתי לזהות דפוסים רגשיים ישנים ולבסוף להשתחרר מטראומות שהכבידו עליי.”</p>
                     <div class="profile">
-                        <img src="{% static 'images/profile-avatar.png' %}" alt="Yael from Jerusalem">
-                        <h3>Yael from Jerusalem</h3>
+                        <img src="{% static 'images/profile-avatar.png' %}" alt="יעל מירושלים">
+                        <h3>יעל, ירושלים</h3>
                     </div>
                     <div class="stars">★★★★★</div>
                 </div>
 
                 <div class="carousel-card">
-                    <p>“I never imagined that healing could feel this natural. Dvora’s mind-body approach taught me how to truly listen to myself. I’m now more balanced, both emotionally and physically.”</p>
+                    <p>“מעולם לא דמיינתי עד כמה תהליך ריפוי יכול להרגיש טבעי. דבורה לאה לימדה אותי כיצד להקשיב לעצמי באמת, ואני מרגישה מאוזנת יותר – רגשית וגם פיזית.”</p>
                     <div class="profile">
-                        <img src="{% static 'images/profile-avatar.png' %}" alt="Yael from Jerusalem">
-                        <h3>Keren from Ramat Gan</h3>
+                        <img src="{% static 'images/profile-avatar.png' %}" alt="קרן מרמת גן">
+                        <h3>קרן, רמת גן</h3>
                     </div>
                     <div class="stars">★★★★★</div>
                 </div>
 
                 <div class="carousel-card">
-                    <p>“Dvora’s sessions are like a safe haven. Each time I leave feeling grounded, more aware, and in tune with my inner world. She’s a gifted healer and a true professional.”</p>
+                    <p>“המפגשים אצל דבורה לאה הם כמו אי של שלווה. בכל פעם אני יוצאת מחוזקת, מודעת יותר, ומחוברת לעצמי. היא מטפלת עם לב ענק ומקצועיות יוצאת דופן.”</p>
                     <div class="profile">
-                        <img src="{% static 'images/profile-avatar.png' %}" alt="Yael from Jerusalem">
-                        <h3>Michal from Be'er Sheva</h3>
+                        <img src="{% static 'images/profile-avatar.png' %}" alt="מיכל מבאר שבע">
+                        <h3>מיכל, באר שבע</h3>
                     </div>
                     <div class="stars">★★★★★</div>
                 </div>
+
             </div>
-        
 
             <div class="carousel-dots">
                 <span class="dot active" onclick="showSlide(0)"></span>
@@ -391,96 +83,91 @@
             <div></br></div>
         </div>
     </div>
-    
-    <footer>
-        <p>© 2025 Dvora Leah's Practice - All Rights Reserved</p>
-    </footer>
+</div>
 
-    <script>
-        function toggleMenu() {
-            document.querySelector("nav ul").classList.toggle("active");
+<script>
+    function toggleMenu() {
+        document.querySelector("nav ul").classList.toggle("active");
+    }
+    function openContactModal() {
+        document.getElementById("contactModal").style.display = "flex";
+    }
+    function closeContactModal() {
+        document.getElementById("contactModal").style.display = "none";
+    }
+    window.onclick = function(event) {
+        let modal = document.getElementById("contactModal");
+        if (event.target === modal) {
+            closeContactModal();
         }
-        function openContactModal() {
-            document.getElementById("contactModal").style.display = "flex";
+    };
+</script>
+
+<script>
+    let currentIndex = 0;
+    const track = document.getElementById('carouselTrack');
+    const dots = document.querySelectorAll('.dot');
+    const totalCards = document.querySelectorAll('.carousel-card').length;
+    let isDragging = false, startPos = 0, currentTranslate = 0, prevTranslate = 0, animationID;
+
+    function showSlide(index) {
+        currentIndex = index;
+        updateCarousel();
+    }
+
+    function updateCarousel() {
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        dots.forEach(dot => dot.classList.remove('active'));
+        dots[currentIndex].classList.add('active');
+    }
+
+    track.addEventListener('mousedown', startDrag);
+    track.addEventListener('mouseup', endDrag);
+    track.addEventListener('mouseleave', endDrag);
+    track.addEventListener('mousemove', drag);
+
+    track.addEventListener('touchstart', startDrag);
+    track.addEventListener('touchend', endDrag);
+    track.addEventListener('touchmove', drag);
+
+    function startDrag(event) {
+        isDragging = true;
+        startPos = getPositionX(event);
+        animationID = requestAnimationFrame(animation);
+        track.style.cursor = 'grabbing';
+    }
+
+    function endDrag() {
+        isDragging = false;
+        cancelAnimationFrame(animationID);
+        const movedBy = currentTranslate - prevTranslate;
+        if (movedBy < -100 && currentIndex < totalCards - 1) currentIndex++;
+        if (movedBy > 100 && currentIndex > 0) currentIndex--;
+        updateCarousel();
+        track.style.cursor = 'grab';
+    }
+
+    function drag(event) {
+        if (!isDragging) return;
+        const currentPosition = getPositionX(event);
+        currentTranslate = prevTranslate + currentPosition - startPos;
+    }
+
+    function getPositionX(event) {
+        return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+    }
+
+    function animation() {
+        if (isDragging) {
+            track.style.transform = `translateX(${currentTranslate}px)`;
+            requestAnimationFrame(animation);
         }
+    }
 
-        function closeContactModal() {
-            document.getElementById("contactModal").style.display = "none";
-        }
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % totalCards;
+        updateCarousel();
+    }, 7000);
+</script>
 
-        window.onclick = function(event) {
-            let modal = document.getElementById("contactModal");
-            if (event.target === modal) {
-                closeContactModal();
-            }
-        };
-    </script>
-
-    <script>
-        let currentIndex = 0;
-        const track = document.getElementById('carouselTrack');
-        const dots = document.querySelectorAll('.dot');
-        const totalCards = document.querySelectorAll('.carousel-card').length;
-        let isDragging = false, startPos = 0, currentTranslate = 0, prevTranslate = 0, animationID;
-
-        function showSlide(index) {
-            currentIndex = index;
-            updateCarousel();
-        }
-
-        function updateCarousel() {
-            track.style.transform = `translateX(-${currentIndex * 100}%)`;
-            dots.forEach(dot => dot.classList.remove('active'));
-            dots[currentIndex].classList.add('active');
-        }
-
-        track.addEventListener('mousedown', startDrag);
-        track.addEventListener('mouseup', endDrag);
-        track.addEventListener('mouseleave', endDrag);
-        track.addEventListener('mousemove', drag);
-
-        track.addEventListener('touchstart', startDrag);
-        track.addEventListener('touchend', endDrag);
-        track.addEventListener('touchmove', drag);
-
-        function startDrag(event) {
-            isDragging = true;
-            startPos = getPositionX(event);
-            animationID = requestAnimationFrame(animation);
-            track.style.cursor = 'grabbing';
-        }
-
-        function endDrag() {
-            isDragging = false;
-            cancelAnimationFrame(animationID);
-            const movedBy = currentTranslate - prevTranslate;
-            if (movedBy < -100 && currentIndex < totalCards - 1) currentIndex++;
-            if (movedBy > 100 && currentIndex > 0) currentIndex--;
-            updateCarousel();
-            track.style.cursor = 'grab';
-        }
-
-        function drag(event) {
-            if (!isDragging) return;
-            const currentPosition = getPositionX(event);
-            currentTranslate = prevTranslate + currentPosition - startPos;
-        }
-
-        function getPositionX(event) {
-            return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
-        }
-
-        function animation() {
-            if (isDragging) {
-                track.style.transform = `translateX(${currentTranslate}px)`;
-                requestAnimationFrame(animation);
-            }
-        }
-
-        setInterval(() => {
-            currentIndex = (currentIndex + 1) % totalCards;
-            updateCarousel();
-        }, 7000);
-    </script>
-</body>
-</html>
+{% endblock %}

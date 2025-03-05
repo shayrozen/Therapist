@@ -1,283 +1,258 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Diary</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
-    <style>
-        /* General Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<div id="diary-content">
+    <h1 class="diary-title">📖 יומן אישי</h1>
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
-        }
+    <!-- Form to Add New Entry -->
+    <form id="diary-form" method="POST" action="{% url 'diary' %}">
+        {% csrf_token %}
+    <!-- Title Input -->
+    {{ entry_form.title }}
+    
+    <!-- Content Input -->
+    {{ entry_form.content }}
+        <button type="submit" class="diary-btn">💾 שמירה</button>
+    </form>
 
-        header {
-            background-color: #004aad;
-            color: white;
-            text-align: center;
-            padding: 1.5rem 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-        }
-
-        header .nav-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .nav-links a {
-            color: white;
-            font-size: 1rem;
-            text-decoration: none;
-            font-weight: bold;
-            padding: 0.6rem 1rem;
-            border-radius: 5px;
-            transition: background 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 1.5rem;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .actions input[type="text"] {
-            width: 100%;
-            max-width: 300px;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        .actions button {
-            background-color: #004aad;
-            color: white;
-            font-size: 1rem;
-            font-weight: bold;
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .actions button:hover {
-            background-color: #00337a;
-        }
-
-        .entries {
-            margin-top: 1rem;
-        }
-
-        .entry {
-            border-bottom: 1px solid #ddd;
-            padding: 1rem 0;
-        }
-
-        .entry h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .entry p {
-            font-size: 1rem;
-            color: #555;
-        }
-
-        .entry time {
-            font-size: 0.9rem;
-            color: #999;
-        }
-
-        .no-entries {
-            text-align: center;
-            color: #777;
-            font-size: 1.2rem;
-            margin-top: 2rem;
-        }
-
-        .back-button {
-            display: inline-block;
-            background-color: #777;
-            color: white;
-            font-size: 1rem;
-            padding: 0.8rem 1.5rem;
-            border-radius: 5px;
-            text-decoration: none;
-            margin-top: 1rem;
-            transition: background-color 0.3s ease;
-        }
-
-        .back-button:hover {
-            background-color: #555;
-        }
-
-        /* Modal Styling */
-        #addEntryModal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-            position: relative;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .modal-content h2 {
-            margin-bottom: 1rem;
-        }
-
-        .modal-content input,
-        .modal-content textarea {
-            width: 100%;
-            padding: 0.8rem;
-            margin-bottom: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        .modal-content button {
-            background-color: #004aad;
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .modal-content button:hover {
-            background-color: #00337a;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        footer {
-            margin-top: 2rem;
-            text-align: center;
-            color: #777;
-            font-size: 0.9rem;
-        }
-    </style>
-</head>
-<body>
-    <!-- Header -->
-    <header>
-        <h1>My Diary</h1>
-        <div class="nav-links">
-            <a href="/">🏠 Home</a>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <div class="container">
-        <a href="/dashboard/" class="back-button">← Back to Dashboard</a>
-        
-        <!-- Actions -->
-        <div class="actions">
-            <input type="text" id="search" placeholder="Search entries..." onkeyup="filterEntries()">
-            <button onclick="openAddEntryModal()">+ Add New Entry</button>
-        </div>
-
-        <!-- Diary Entries -->
-        <div class="entries" id="entries">
-            {% if entries %}
+    <!-- Display Entries -->
+    <div id="diary-entries">
+        <h2 class="diary-subtitle">📜 רשומות קודמות</h2>
+        {% if entries %}
+            <ul id="entries-list">
                 {% for entry in entries %}
-                <div class="entry">
-                    <h3>{{ entry.title }}</h3>
-                    <p>{{ entry.content }}</p>
-                    <time>{{ entry.date|date:"M d, Y H:i" }}</time>
-                </div>
+                    <li class="diary-entry">
+                        <strong class="diary-entry-title">{{ entry.title }}</strong>
+                        <p class="diary-entry-content">{{ entry.content }}</p>
+                        <small class="diary-entry-date">📅 {{ entry.date|date:"d/m/Y H:i" }}</small>
+
+                        <!-- Delete Entry Form -->
+                        <form class="delete-form" method="POST" action="{% url 'diary' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="delete_entry" value="{{ entry.id }}">
+                            <button type="submit" class="delete-btn">🗑️ מחק</button>
+                        </form>
+                    </li>
                 {% endfor %}
-            {% else %}
-            <div class="no-entries">No entries found. Start by adding your first diary entry!</div>
-            {% endif %}
-        </div>
+            </ul>
+        {% else %}
+            <p class="diary-placeholder">אין עדיין רשומות, הוסיפי את הראשונה!</p>
+        {% endif %}
     </div>
+</div>
 
-    <!-- Add Entry Modal -->
-    <div id="addEntryModal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeAddEntryModal()">&times;</span>
-            <h2>Add New Entry</h2>
-            <form method="post" action="{% url 'add_diary_entry' %}">
-                {% csrf_token %}
-                <input type="text" name="title" placeholder="Entry Title" required>
-                <textarea name="content" placeholder="Your thoughts..." required></textarea>
-                <button type="submit">Save</button>
-                <button type="button" onclick="closeAddEntryModal()">Cancel</button>
-            </form>
-        </div>
-    </div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const diaryForm = document.getElementById("diary-form");
 
-    <footer>
-        <p>© 2025 Dvora Leah's Practice</p>
-    </footer>
+    diaryForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        const formData = new FormData(diaryForm);
 
-    <script>
-        function openAddEntryModal() {
-            document.getElementById('addEntryModal').style.display = 'flex';
-        }
+        fetch("{% url 'diary' %}", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById("content-display").innerHTML = html;
+        })
+        .catch(error => console.error("Error updating diary:", error));
+    });
 
-        function closeAddEntryModal() {
-            document.getElementById('addEntryModal').style.display = 'none';
-        }
+    // Prevent redirection after deletion
+    document.querySelectorAll(".delete-form").forEach(form => {
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+            const formData = new FormData(form);
 
-        window.onclick = function(event) {
-            let modal = document.getElementById("addEntryModal");
-            if (event.target == modal) {
-                closeAddEntryModal();
-            }
-        };
-    </script>
-</body>
-</html>
+            fetch("{% url 'diary' %}", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById("content-display").innerHTML = html;
+            })
+            .catch(error => console.error("Error deleting entry:", error));
+        });
+    });
+});
+</script>
+
+
+
+
+<style>
+    /* Main Diary Container */
+    #diary-content {
+        text-align: center;
+        width: 80%;
+        margin: auto;
+        padding: 25px;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 20px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(15px);
+        animation: fadeIn 0.5s ease-in-out;
+        transition: all 0.3s ease-in-out;
+    }
+    
+    /* Titles */
+    .diary-title {
+        font-size: 2.2rem;
+        font-weight: bold;
+        color: #2c3e50;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        margin-bottom: 10px;
+    }
+    
+    .diary-subtitle {
+        font-size: 1.4rem;
+        margin-top: 20px;
+        color: #4b6584;
+    }
+    
+    /* Form Styling */
+    .diary-form p {
+        text-align: right;
+        font-size: 1rem;
+        margin-bottom: 12px;
+    }
+    
+    /* Form Inputs */
+    input[type="text"], textarea {
+        width: 95%;
+        padding: 12px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        background: rgba(255, 255, 255, 0.6);
+        transition: all 0.3s ease-in-out;
+        box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.05);
+    }
+    
+    input[type="text"]:focus, textarea:focus {
+        border-color: #27ae60;
+        box-shadow: 0 0 10px rgba(39, 174, 96, 0.3);
+        background: white;
+    }
+    
+    /* Buttons */
+    .diary-btn {
+        padding: 12px 20px;
+        font-size: 1rem;
+        font-weight: bold;
+        background: linear-gradient(135deg, #27ae60, #2ecc71);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .diary-btn:hover {
+        background: linear-gradient(135deg, #2ecc71, #27ae60);
+        transform: scale(1.05);
+        box-shadow: 0 6px 14px rgba(39, 174, 96, 0.4);
+    }
+    
+    /* Entries List */
+    #entries-list {
+        list-style-type: none;
+        padding: 0;
+        max-height: 300px;
+        overflow-y: auto;
+        border-radius: 10px;
+    }
+    
+    /* Individual Diary Entry */
+    .diary-entry {
+        background: rgba(255, 255, 255, 0.9);
+        margin: 10px 0;
+        padding: 15px;
+        border-radius: 12px;
+        text-align: right;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease-in-out;
+        animation: slideIn 0.4s ease-out;
+        border-left: 5px solid #27ae60;
+    }
+    
+    .diary-entry:hover {
+        transform: translateY(-3px);
+        background: rgba(255, 255, 255, 1);
+    }
+    
+    /* Entry Title */
+    .diary-entry-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #2c3e50;
+        text-align: right;
+    }
+    
+    /* Entry Content */
+    .diary-entry-content {
+        font-size: 1rem;
+        color: #555;
+        margin-top: 5px;
+        text-align: right;
+    }
+    
+    /* Entry Date */
+    .diary-entry-date {
+        display: block;
+        font-size: 0.85rem;
+        color: #777;
+        margin-top: 8px;
+        text-align: left;
+    }
+    
+    /* Delete Button */
+    .delete-form {
+        display: inline-block;
+        margin-top: 5px;
+    }
+    
+    .delete-btn {
+        background: linear-gradient(135deg, #e74c3c, #c0392b);
+        color: white;
+        font-size: 0.9rem;
+        border: none;
+        padding: 7px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 3px 8px rgba(231, 76, 60, 0.3);
+    }
+    
+    .delete-btn:hover {
+        background: linear-gradient(135deg, #c0392b, #e74c3c);
+        transform: scale(1.05);
+        box-shadow: 0 6px 12px rgba(231, 76, 60, 0.4);
+    }
+    
+    /* Placeholder Text */
+    .diary-placeholder {
+        font-size: 1rem;
+        color: #999;
+        text-align: center;
+        font-style: italic;
+        font-weight: bold;
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes slideIn {
+        from { transform: translateY(10px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+    
+</style>

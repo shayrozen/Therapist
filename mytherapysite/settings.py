@@ -54,8 +54,15 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware',  # Add this line
+    'allauth.account.middleware.AccountMiddleware',  
 ]
+
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Store session in DB
+SESSION_COOKIE_AGE = 86400  # Keep session for 1 day
+SESSION_SAVE_EVERY_REQUEST = True  # Refresh session on each request
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Don't log out on browser close
+
 
 
 ROOT_URLCONF = "mytherapysite.urls"
@@ -63,8 +70,8 @@ ROOT_URLCONF = "mytherapysite.urls"
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'therapist' / 'templates'],  # Include the global templates directory
-        'APP_DIRS': True,
+        'DIRS': [BASE_DIR / "therapist/templates"],  # Make sure this path is correct
+        'APP_DIRS': True,  # This should be exactly like this
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -179,6 +186,7 @@ EMAIL_HOST_PASSWORD = 'bsaqrwydxhgktmlx'  # Use an App Password instead of a rea
 # Django Allauth Configuration
 ACCOUNT_AUTHENTICATION_METHOD = "email"  # Use email instead of username
 ACCOUNT_EMAIL_REQUIRED = True  # Require email during signup
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None  # Remove username completely
 ACCOUNT_EMAIL_VERIFICATION = "optional"  # Set as "none" to disable verification or "mandatory" for production
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # Default sender email address
 

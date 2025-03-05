@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    {% load static %}    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{% block title %}כותרת ברירת מחדל{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+</head>
+<body>
+    <nav>
+        <div class="logo-container">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'images/logo.jpg' %}" alt="לוגו" height="60">
+            </a>
+        </div>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <ul> 
+            <li class="{% if request.path == '/Blog/' %}active-link{% endif %}">
+                <a href="/Blog/">מחשבות & תובנות</a>
+            </li>
+            <li class="{% if request.path == '/Experiences/' %}active-link{% endif %}">
+                <a href="/Experiences/">מטופלים מספרים</a>
+            </li>
+            <li class="{% if request.path == '/services/' %}active-link{% endif %}">
+                <a href="/services/">תחומי טיפול</a>
+            </li>
+            <li class="{% if request.path == '/about/' %}active-link{% endif %}">
+                <a href="/about/">הסיפור שלי 💕</a>
+            </li>
+            <li class="{% if request.path == '/dashboard/' %}active-link{% endif %}">
+                <a href="/dashboard/">שולחן עבודה אישי</a>
+            </li>
+        </ul>
+    </nav>
+
+
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <button class="contact-btn" onclick="openContactModal()">📞 צרו קשר</button>
+
+    <!-- מודאל יצירת קשר -->
+    <div id="contactModal" class="contact-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeContactModal()">&times;</span>
+            <h2>צור קשר</h2>
+            <p>השאירו פרטים ונחזור אליכם בהקדם.</p>
+            <form>
+                <input type="text" placeholder="שם מלא" required>
+                <input type="email" placeholder="אימייל" required>
+                <textarea placeholder="הודעה" required></textarea>
+                <button type="submit">שלח</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 הקליניקה של דבורה לאה - כל הזכויות שמורות</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector("nav ul").classList.toggle("active");
+        }
+
+        function openContactModal() {
+            document.getElementById("contactModal").style.display = "flex";
+        }
+
+        function closeContactModal() {
+            document.getElementById("contactModal").style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            let modal = document.getElementById("contactModal");
+            if (event.target === modal) {
+                closeContactModal();
+            }
+        };
+    </script>
+</body>
+</html>

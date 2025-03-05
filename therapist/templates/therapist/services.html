@@ -1,42 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Therapy Services</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
-</head>
-<body>
-    <header>
-        <h1>Our Therapy Services</h1>
-    </header>
-    <section class="services-hero">
-        <img src="{% static 'images/services-hero.jpg' %}" alt="Therapy Services" class="hero-image">
-        <h2>Supporting Your Mental Health Journey</h2>
-        <p>Explore our range of therapy services designed to meet your needs.</p>
-    </section>
-    <section class="services-list">
-        <div class="service-card">
-            <h2>Individual Therapy</h2>
-            <p>One-on-one sessions to address anxiety, depression, stress, or personal growth.</p>
+{% extends 'therapist/base.html' %}
+{% load static %}
+
+{% block title %}תחומי טיפול{% endblock %}
+
+{% block content %}
+
+<div class="hero-section">
+    <video autoplay muted loop class="hero-video">
+        <source src="{% static 'videos/services.mp4' %}" type="video/mp4">
+        הדפדפן שלך אינו תומך בתגית הוידאו.
+    </video>
+    <div class="hero-content">
+        <h1>תחומי טיפול</h1>
+        <p>ליווי ותמיכה במסע שלך לרווחה נפשית ואיזון.</p>
+    </div>
+</div>
+
+<div class="divider">
+    <img src="{% static 'images/divider-leaves.svg' %}" alt="קו מפריד דקורטיבי עם עלים">
+</div>
+
+<section class="services-list">
+    <div class="content-wrapper">
+        <div class="blog-post">
+            <h2>טיפול פרטני</h2>
+            <p>מפגשים אישיים להתמודדות עם חרדה, דיכאון, לחץ והתפתחות אישית.</p>
         </div>
-        <div class="service-card">
-            <h2>Couples Therapy</h2>
-            <p>Strengthen your relationship through open communication and mutual understanding.</p>
+        <div class="blog-post">
+            <h2>טיפול זוגי</h2>
+            <p>חיזוק הקשר הזוגי באמצעות תקשורת פתוחה והבנה הדדית.</p>
         </div>
-        <div class="service-card">
-            <h2>Family Counseling</h2>
-            <p>Resolve conflicts and build stronger family connections in a supportive environment.</p>
+        <div class="blog-post">
+            <h2>טיפול משפחתי</h2>
+            <p>עזרה בפתרון קונפליקטים ובניית קשרים משפחתיים בריאים בסביבה תומכת.</p>
         </div>
-        <div class="service-card">
-            <h2>Workshops</h2>
-            <p>Group sessions focusing on mindfulness, stress management, and more.</p>
+        <div class="blog-post">
+            <h2>סדנאות והרצאות</h2>
+            <p>מפגשים קבוצתיים המתמקדים במיינדפולנס, ניהול מתחים ועוד.</p>
         </div>
-    </section>
-    <footer>
-        <p>© 2025 Dvora Leah's Practice</p>
-    </footer>
-</body>
-</html>
+    </div>
+</section>
+
+<div class="divider">
+    <img src="{% static 'images/divider-leaves.svg' %}" alt="קו מפריד דקורטיבי עם עלים">
+</div>
+
+<script>
+    function toggleMenu() {
+        document.querySelector("nav ul").classList.toggle("active");
+    }
+</script>
+
+{% endblock %}

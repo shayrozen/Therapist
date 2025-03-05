@@ -1,134 +1,99 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Therapist Practice</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
-    <style>
-        /* General Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+{% extends 'therapist/base.html' %}
+{% load static %}
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f5f5f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+{% block title %}התחברות{% endblock %}
 
-        .login-container {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 100%;
-            padding: 2rem;
-        }
+{% block content %}
+<div class="form-container">
 
-        .login-header {
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
+    <div class="content-wrapper">
+        <div id="login-box">
+            <h2>כניסה למערכת</h2>
+            <p>ברוך הבא! אנא התחבר כדי להמשיך.</p>
 
-        .login-header h1 {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #004aad;
-        }
+            <form id="loginForm" method="post" action="{% url 'account_login' %}" class="styled-form">
+                {% csrf_token %}
+                
+                <label for="id_email">כתובת דוא"ל:</label>
+                {{ form.login }}
 
-        .login-header p {
-            font-size: 1rem;
-            color: #555;
-        }
+                <label for="id_password">סיסמה:</label>
+                {{ form.password }}
 
-        .login-form {
-            display: flex;
-            flex-direction: column;
-        }
+                <button type="submit" class="btn-primary">כניסה</button>
+            </form>
 
-        .login-form label {
-            font-size: 1rem;
-            color: #333;
-            margin-bottom: 0.5rem;
-        }
-
-        .login-form input {
-            font-size: 1rem;
-            padding: 0.8rem;
-            margin-bottom: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        .login-form button {
-            background-color: #004aad;
-            color: white;
-            font-size: 1rem;
-            font-weight: bold;
-            padding: 0.8rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .login-form button:hover {
-            background-color: #00337a;
-        }
-
-        .extra-links {
-            text-align: center;
-            margin-top: 1rem;
-        }
-
-        .extra-links a {
-            text-decoration: none;
-            font-size: 0.9rem;
-            color: #004aad;
-            transition: color 0.3s ease;
-        }
-
-        .extra-links a:hover {
-            color: #00337a;
-        }
-
-        .brand-logo {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .brand-logo img {
-            max-width: 100px;
-            border-radius: 50%;
-        }
-    </style>
-</head>
-<body>
-    <div class="login-container">
-        <div class="brand-logo">
-            <img src="{% static 'images/logo.png' %}" alt="Brand Logo">
-        </div>
-        <div class="login-header">
-            <h1>Login</h1>
-            <p>Welcome back! Please log in to your account.</p>
-        </div>
-        <form method="post" action="{% url 'account_login' %}" class="login-form">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Sign In</button>
-        </form>
-        <div class="extra-links">
-            <p>Don't have an account? <a href="{% url 'account_signup' %}">Sign Up</a></p>
-            <p><a href="{% url 'account_reset_password' %}">Forgot Password?</a></p>
+            <div class="form-links">
+                <p>אין לך חשבון? <a href="{% url 'account_signup' %}">הרשמה</a></p>
+                <p><a href="{% url 'account_reset_password' %}">שכחת סיסמה?</a></p>
+            </div>
         </div>
     </div>
-</body>
-</html>
+</div>
+
+<!-- ✅ JavaScript for Smooth Animation and Redirect -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("loginForm");
+        const contentWrapper = document.querySelector(".content-wrapper"); // ✅ Target the main area
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(form); // Collect form data
+
+            fetch("{% url 'account_login' %}", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error("Login failed");
+                }
+            })
+            .then(() => {
+                // Hide form
+                document.getElementById("login-box").style.display = "none"; 
+
+                // ✅ Dynamically Create Success Message in a Blog-Post Style Container
+                const successMessage = document.createElement("div");
+                successMessage.id = "success-message";
+                successMessage.classList.add("blog-post");  // ✅ Use the same blog-post style
+                successMessage.innerHTML = `
+                    <div class="checkmark-container">
+                        <div class="checkmark-circle">
+                            <div class="checkmark"></div>
+                        </div>
+                    </div>
+                    <h2 class="text-green-500 text-2xl font-semibold mt-4">התחברת בהצלחה!</h2>
+                    <p class="text-gray-500">מעבר לשולחן האישי...</p>
+                `;
+
+                // ✅ Replace content with success message
+                contentWrapper.innerHTML = "";
+                contentWrapper.appendChild(successMessage);
+
+                // Add animation class after a short delay
+                setTimeout(() => {
+                    successMessage.classList.add("opacity-100", "scale-100");
+                }, 50);
+
+                // Redirect after animation
+                setTimeout(() => {
+                    window.location.href = "{% url 'dashboard' %}";
+                }, 2000);
+            })
+            .catch(error => {
+                console.error(error);
+                alert("Login failed. Please check your credentials.");
+            });
+        });
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Therapy Readiness Assessment{% endblock %}
+{% block content %}
+<div class="assessment-container">
+    <h2>Discover Your Therapy Readiness</h2>
+    <p>Answer a few questions to get a personalized insight into your emotional well-being.</p>
+    <form method="post">
+        {% csrf_token %}
+        <div class="questions">
+            {{ form.as_p }}
+        </div>
+        <button type="submit" class="btn-primary">See My Results</button>
+    </form>
+</div>
+{% endblock %}

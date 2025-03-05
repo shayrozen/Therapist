@@ -1,0 +1,125 @@
+{% extends 'therapist/base.html' %}
+{% load static %}
+
+{% block title %}טופס אינטייק ראשוני{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+
+    <div class="divider">
+        <img src="{% static 'images/divider-leaves.svg' %}" alt="Decorative divider with leaves">
+    </div>
+
+    <div class="blog-post">
+        <h2>טופס אינטייק ראשוני</h2>
+        <p>אנא מלא את הפרטים הבאים כדי לעזור לנו להבין כיצד נוכל לסייע לך בצורה הטובה ביותר.</p>
+
+        <!-- ✅ Intake Form -->
+        <div id="intake-form">
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="alert alert-success">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form id="intakeForm" method="post" class="styled-form">
+                {% csrf_token %}
+                <table class="styled-table">
+                    <tbody>
+                        {% for field in form %}
+                        <tr>
+                            <td>
+                                {{ field }}
+                                {% if field.help_text %}
+                                    <small class="help-text">{{ field.help_text }}</small>
+                                {% endif %}
+                                {% for error in field.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
+                            </td>
+                            <td>
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="button-container">
+                    <button type="submit" class="btn-primary">שלח את הטופס</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ✅ JavaScript for Dynamic Success Message & Redirect -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("intakeForm");
+        const contentWrapper = document.querySelector(".content-wrapper"); // ✅ Target main content area
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(form); // Collect form data
+
+            fetch("{{ request.path }}", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error("Form submission failed");
+                }
+            })
+            .then(() => {
+                // Hide form
+                document.getElementById("intake-form").style.display = "none"; 
+
+                // ✅ Dynamically Create and Insert Success Message in a Blog-Post Style Container
+                const successMessage = document.createElement("div");
+                successMessage.id = "success-message";
+                successMessage.classList.add("blog-post");  // ✅ Adds the same styling as your existing blog post
+                successMessage.innerHTML = `
+                    <div class="checkmark-container">
+                        <div class="checkmark-circle">
+                            <div class="checkmark"></div>
+                        </div>
+                    </div>
+                    <h2 class="text-green-500 text-2xl font-semibold mt-4">הטופס נשמר בהצלחה!</h2>
+                    <p class="text-gray-500">מעבר לסיכום האינטייק...</p>
+                `;
+
+                // ✅ Insert the success message at the top of the content wrapper
+                contentWrapper.innerHTML = ""; // Remove existing content
+                contentWrapper.appendChild(successMessage);
+
+                // Add animation class after a short delay
+                setTimeout(() => {
+                    successMessage.classList.add("opacity-100", "scale-100");
+                }, 50);
+
+                // Redirect after animation
+                setTimeout(() => {
+                    window.location.href = "{% url 'intake_summary' %}";
+                }, 2000);
+            })
+            .catch(error => {
+                console.error(error);
+                alert("Form submission failed. Please try again.");
+            });
+        });
+    });
+</script>
+
+
+{% endblock %}

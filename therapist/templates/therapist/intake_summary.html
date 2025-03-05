@@ -1,0 +1,50 @@
+{% extends 'therapist/base.html' %}
+{% load static %}
+
+{% block title %}סיכום אינטייק{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% else %}alert-info{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+    <div class="divider">
+        <img src="{% static 'images/divider-leaves.svg' %}" alt="Decorative divider with leaves">
+    </div>
+        
+    <div class="blog-post">
+        <h2>סיכום אינטייק</h2>
+        <p>להלן הפרטים שמילאת בטופס האינטייק הראשוני.</p>
+
+
+
+        <table class="styled-form">
+            <tbody>
+                {% for field in form %}
+                <tr>
+                    <td>
+                        {% if field.name in boolean_fields %}
+                            {% if field.value %} כן {% else %} לא {% endif %}
+                        {% else %}
+                            {{ field.value|default_if_none:"" }}
+                        {% endif %}
+                        </td>
+                    <td><label>{{ field.label }}</label></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="button-container">
+            <a href="{% url 'dashboard' %}" class="btn-primary">חזרה ללוח הבקרה</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

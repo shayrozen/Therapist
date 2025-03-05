@@ -1,0 +1,51 @@
+{% extends "therapist/base.html" %}
+{% load static %}
+
+{% block title %}תוצאות האבחון{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="divider">
+        <img src="{% static 'images/divider-leaves.svg' %}" alt="Decorative divider with leaves">
+    </div>
+
+    <div class="blog-post">
+        <h2>הטפסים שלי</h2>
+
+        {% if assessments %}
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>תאריך</th>
+                        <th>שם</th>
+                        <th>טלפון</th>
+                        <th>אימייל</th>
+                        <th>גיל</th>
+                        <th>סיבה לטיפול</th>
+                        <th>מטרת הטיפול</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for assessment in assessments %}
+                    <tr>
+                        <td>{{ assessment.date }}</td>
+                        <td>{{ assessment.full_name }}</td>
+                        <td>{{ assessment.phone }}</td>
+                        <td>{{ assessment.email }}</td>
+                        <td>{{ assessment.age }}</td>
+                        <td>{{ assessment.reason_for_therapy }}</td>
+                        <td>{{ assessment.therapy_goals }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p style="text-align: center;">לא נמצאו טפסים.</p>
+        {% endif %}
+
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="{% url 'dashboard' %}" class="btn-primary">חזור ללוח הבקרה</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
