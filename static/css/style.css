@@ -577,7 +577,7 @@ footer {
 
 
 .content {
-    margin-top: 15vh; /* Adjust this value based on navbar height */
+    margin-top: 10vh; /* Adjust this value based on navbar height */
 }
 .content ul {
     list-style: none;
